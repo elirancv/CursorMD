@@ -76,7 +76,21 @@ Automatically adapts documentation depth and focus based on your project goal:
 - 📈 **Progress tracking** - Shows what's done, what's missing, what's next
 - ⚠️ **Blocker detection** - Warns when missing documents block others
 
-**Example:** Before creating `ARCHITECTURE_OVERVIEW.md`, the system checks if `PRD_MVP.md` exists and suggests creating it first if missing.
+**How it works:** Simply ask *"What documents do I need?"* or *"What's missing?"* and the system will:
+1. Scan your project for existing documentation
+2. Identify missing critical documents
+3. Show dependencies and blockers
+4. Suggest the optimal build order
+
+**Example output:**
+```
+📊 Documentation Status Report
+
+✅ Created (2): README.md, VISION.md
+❌ Missing Critical: PROBLEM_STATEMENT.md ⚠️ BLOCKS 3 documents
+🎯 Recommended Next: PROBLEM_STATEMENT.md → PRODUCT_OVERVIEW.md → PRD_MVP.md
+📈 Progress: 2/53 documents (3.8%)
+```
 
 ### 🏗️ Modular Architecture
 
@@ -122,10 +136,15 @@ Open Cursor IDE and simply ask:
 ```
 "Create VISION.md for my project"
 "Generate PRD_MVP.md"
+"What documents do I need?"  # Auto-detect missing docs
 "Create ARCHITECTURE_OVERVIEW.md"
 ```
 
-The AI will automatically use the rules and generate professional documentation!
+The AI will automatically:
+- Use the rules and generate professional documentation
+- Check dependencies before creating documents
+- Suggest missing prerequisites if needed
+- Track progress and suggest next steps
 
 ---
 
@@ -149,6 +168,13 @@ Update PRD_MVP.md - add feature: real-time collaboration
 ### Evaluate Your Project
 ```
 Evaluate this project and create PROJECT_EVALUATION.md
+```
+
+### Auto-Detect Missing Documents
+```
+What documents do I need?
+What's missing?
+What can I create now?
 ```
 
 ---
