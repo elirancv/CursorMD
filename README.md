@@ -66,9 +66,21 @@ Automatically adapts documentation depth and focus based on your project goal:
 - 🟣 **Dev Tooling** → Excellent README, API reference, examples
 - ⚪ **Balanced** → Full documentation suite
 
+### 🧩 Auto-Detection & Dependency Tracking
+
+**"Proper specification is 50% of the work"** - Documentation is like a puzzle - build in the right order, and everything fits together perfectly.
+
+- 🔍 **Auto-detect missing documents** - Scans your project and identifies what's needed
+- 📊 **Dependency tracking** - Knows which documents depend on others
+- 🎯 **Build order** - Suggests the correct sequence (like puzzle pieces)
+- 📈 **Progress tracking** - Shows what's done, what's missing, what's next
+- ⚠️ **Blocker detection** - Warns when missing documents block others
+
+**Example:** Before creating `ARCHITECTURE_OVERVIEW.md`, the system checks if `PRD_MVP.md` exists and suggests creating it first if missing.
+
 ### 🏗️ Modular Architecture
 
-- **12 modular rule files** (`.cursor/rules/*.mdc`) - Clean, maintainable, extensible
+- **13 modular rule files** (`.cursor/rules/*.mdc`) - Clean, maintainable, extensible
 - **Knowledge base** - Centralized templates and patterns
 - **Backward compatible** - Supports legacy `.cursorrules` format
 
@@ -162,9 +174,10 @@ Comprehensive guides and references:
 ```
 CursorMD/
 ├── .cursor/
-│   └── rules/                        # ✅ PRIMARY FORMAT - 12 modular rule files
+│   └── rules/                        # ✅ PRIMARY FORMAT - 13 modular rule files
 │       ├── core-identity.mdc
 │       ├── workflow.mdc
+│       ├── document-dependencies.mdc  # 🆕 Auto-detection & dependency tracking
 │       ├── file-organization.mdc    # CRITICAL - File placement rules
 │       ├── document-types.mdc
 │       ├── knowledge-base.mdc

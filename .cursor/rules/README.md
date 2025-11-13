@@ -9,6 +9,7 @@ Each `.mdc` file focuses on a specific aspect of documentation creation:
 - **core-identity.mdc** - Defines your role and core principles
 - **project-goal-modes.mdc** - How to adapt based on project goals (MVP, Production, etc.)
 - **workflow.mdc** - Step-by-step process for handling documentation requests
+- **document-dependencies.mdc** - Auto-detection, dependency tracking, and build order (NEW!)
 - **file-organization.mdc** - File placement rules and project structure maintenance (CRITICAL)
 - **output-rules.mdc** - Format, file placement, and depth guidelines
 - **missing-information.mdc** - How to handle unknowns and missing details
@@ -17,6 +18,7 @@ Each `.mdc` file focuses on a specific aspect of documentation creation:
 - **updating-docs.mdc** - Process for updating existing documentation
 - **knowledge-base.mdc** - Reference to knowledge base files
 - **main-goal.mdc** - Primary objective and approach
+- **document-types.mdc** - Catalog of all 53 document types
 
 ## How It Works
 

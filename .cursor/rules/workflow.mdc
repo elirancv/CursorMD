@@ -13,18 +13,37 @@ Gather essential information:
 
 **Exception:** If user says "just try something quickly", ask less and produce a useful draft fast.
 
+**Auto-Detection:** Before proposing scope, automatically:
+1. Scan project for existing documentation files
+2. Check dependencies (see `document-dependencies.mdc`)
+3. Identify missing critical documents
+4. Detect blockers (missing dependencies)
+
 ## Step 2: Propose Documentation Scope
 
-- Suggest 1-5 docs with 1-line rationale each
+- **First:** Show documentation status (what exists, what's missing, what blocks what)
+- **Then:** Suggest 1-5 docs with 1-line rationale each
+- **Include:** Dependency warnings if prerequisites are missing
 - **For complex projects, offer a documentation roadmap first**, then generate docs one-by-one
+- **Show build order:** The correct sequence (like puzzle pieces) based on dependencies
 
 ## Step 3: Generate ONE Document Per Response
+
+**Before generating, check dependencies:**
+1. **Check dependency map** (see `document-dependencies.mdc`)
+2. **Verify prerequisites exist** - if missing, warn user and offer to create them first
+3. **If user insists on proceeding:** Use `[TBD: ...]` markers for missing dependency content
 
 - Always output complete, ready-to-use Markdown
 - **Show document content in chat first** - Display the full document
 - **Ask before creating files** - "Should I create this file at `docs/[filename].md`?"
 - **Wait for user confirmation** - Only create file after explicit approval
 - For multi-doc needs: provide roadmap/checklist first, then create docs as requested
+
+**After creating a document:**
+- Update documentation status
+- Suggest next documents that are now unblocked
+- Show progress (X/53 documents)
 
 ### File Creation Decision
 
@@ -33,6 +52,7 @@ Gather essential information:
 2. Did user approve after seeing summary?
 3. Is the location correct (root vs docs/)?
 4. Does the file already exist (should update instead)?
+5. **Are dependencies met?** (check `document-dependencies.mdc`)
 
 **If unsure:** Show summary and ask for confirmation. Never create files without explicit approval.
 
@@ -59,11 +79,17 @@ To help you best, tell me:
 ## Common Requests
 
 1. **Full docs**: "Generate core documentation for my project: <description>"
+   → **Auto-detect:** Show status, suggest build order, generate in dependency order
 2. **Single doc**: "Create a PRD / architecture / test plan for <project>"
+   → **Check dependencies:** Warn if prerequisites missing, offer to create them first
 3. **Specific doc type**: "Create VISION.md" or "Generate TECH_SPEC_MVP.md"
+   → **Check dependencies:** Verify prerequisites, suggest missing ones
 4. **Evaluation**: "Evaluate this project and create PROJECT_EVALUATION.md"
 5. **Updates**: "Update the README with these changes: <details>"
-6. **Document list**: "What documents do I need?" → Reference the 42-document catalog
+6. **Document list**: "What documents do I need?" → Show complete status with dependencies
+7. **What's missing?**: "What documents are missing?" → Auto-detect and show status report
+8. **What can I create now?**: Show documents with all dependencies met
+9. **Check dependencies**: "What does [DOCUMENT] depend on?" → Show dependency tree
 
 **If vague:** Ask 2–5 focused questions, then start writing.
 

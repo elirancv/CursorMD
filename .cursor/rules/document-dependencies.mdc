@@ -1,0 +1,339 @@
+# Document Dependencies & Auto-Detection
+
+## Core Principle: Documentation as a Puzzle
+
+**"Proper specification is 50% of the work"** - Once the specification is perfect, building the project becomes easier - it's like a puzzle. Documents must be built in the correct order, with each piece depending on previous ones.
+
+## Auto-Detection System
+
+### When User Starts or Asks "What's Missing?"
+
+**Automatically:**
+1. **Scan project** for existing documentation files
+2. **Identify missing** critical documents based on project stage
+3. **Detect dependencies** - what needs to be created first
+4. **Suggest build order** - the correct sequence (like puzzle pieces)
+5. **Track progress** - show what's done, what's missing, what's next
+
+### Document Dependency Graph
+
+Documents have dependencies - some must be created before others:
+
+#### Foundation Layer (Start Here)
+```
+VISION.md
+  ↓
+PROBLEM_STATEMENT.md
+  ↓
+PRODUCT_OVERVIEW.md
+```
+
+#### Requirements Layer (Depends on Foundation)
+```
+VISION.md → PRD_MVP.md
+PROBLEM_STATEMENT.md → USER_STORIES.md
+PRODUCT_OVERVIEW.md → SCOPE_DOCUMENT.md
+```
+
+#### Architecture Layer (Depends on Requirements)
+```
+PRD_MVP.md → ARCHITECTURE_OVERVIEW.md
+USER_STORIES.md → TECH_SPEC_MVP.md
+SCOPE_DOCUMENT.md → SYSTEM_COMPONENTS.md
+```
+
+#### Implementation Layer (Depends on Architecture)
+```
+ARCHITECTURE_OVERVIEW.md → ENGINEERING_GUIDE.md
+TECH_SPEC_MVP.md → PIPELINE_MVP.md
+SYSTEM_COMPONENTS.md → DATA_MODEL.md
+```
+
+#### Operations Layer (Depends on Implementation)
+```
+ENGINEERING_GUIDE.md → DEPLOYMENT_RUNBOOK.md
+PIPELINE_MVP.md → CI_CD_PIPELINE.md
+DATA_MODEL.md → INFRASTRUCTURE_OVERVIEW.md
+```
+
+### Complete Dependency Map
+
+**Level 1 - Foundation (No dependencies):**
+- VISION.md
+- PROBLEM_STATEMENT.md
+- MARKET_ANALYSIS.md
+- ONE_PAGER.md
+
+**Level 2 - Strategy (Depends on Level 1):**
+- PRODUCT_OVERVIEW.md (needs: VISION.md)
+- VALUE_PROPOSITION.md (needs: PROBLEM_STATEMENT.md, MARKET_ANALYSIS.md)
+- POSITIONING.md (needs: MARKET_ANALYSIS.md)
+- USE_CASES.md (needs: PROBLEM_STATEMENT.md)
+
+**Level 3 - Requirements (Depends on Level 2):**
+- PRD_MVP.md (needs: PRODUCT_OVERVIEW.md, VISION.md)
+- USER_STORIES.md (needs: USE_CASES.md, VALUE_PROPOSITION.md)
+- SCOPE_DOCUMENT.md (needs: PRODUCT_OVERVIEW.md)
+- ACCEPTANCE_CRITERIA.md (needs: USER_STORIES.md)
+- PRODUCT_FEATURE_LIST.md (needs: PRD_MVP.md)
+
+**Level 4 - Architecture (Depends on Level 3):**
+- ARCHITECTURE_OVERVIEW.md (needs: PRD_MVP.md, TECH_SPEC_MVP.md outline)
+- TECH_SPEC_MVP.md (needs: PRD_MVP.md, USER_STORIES.md)
+- SYSTEM_COMPONENTS.md (needs: ARCHITECTURE_OVERVIEW.md)
+- SYSTEM_DIAGRAMS.md (needs: ARCHITECTURE_OVERVIEW.md, SYSTEM_COMPONENTS.md)
+- DATA_MODEL.md (needs: TECH_SPEC_MVP.md, USER_STORIES.md)
+
+**Level 5 - Execution (Depends on Level 4):**
+- PIPELINE_MVP.md (needs: TECH_SPEC_MVP.md, ARCHITECTURE_OVERVIEW.md)
+- EXECUTION_MODEL.md (needs: PIPELINE_MVP.md)
+- RETRY_AND_RESUME_LOGIC.md (needs: PIPELINE_MVP.md)
+- FAILURE_MODES.md (needs: PIPELINE_MVP.md, ARCHITECTURE_OVERVIEW.md)
+
+**Level 6 - Engineering (Depends on Level 5):**
+- ENGINEERING_GUIDE.md (needs: ARCHITECTURE_OVERVIEW.md, TECH_SPEC_MVP.md)
+- CODING_STANDARDS.md (needs: ENGINEERING_GUIDE.md)
+- TEST_PLAN.md (needs: TECH_SPEC_MVP.md, USER_STORIES.md)
+- DEPLOYMENT_RUNBOOK.md (needs: PIPELINE_MVP.md, INFRASTRUCTURE_OVERVIEW.md)
+- CI_CD_PIPELINE.md (needs: PIPELINE_MVP.md, TEST_PLAN.md)
+
+**Level 7 - Operations (Depends on Level 6):**
+- INFRASTRUCTURE_OVERVIEW.md (needs: ARCHITECTURE_OVERVIEW.md, DATA_MODEL.md)
+- OBSERVABILITY.md (needs: PIPELINE_MVP.md, INFRASTRUCTURE_OVERVIEW.md)
+
+**Level 8 - Business (Can be parallel, but benefits from Level 2-3):**
+- BUSINESS_MODEL.md (needs: PRODUCT_OVERVIEW.md, VALUE_PROPOSITION.md)
+- PRICING_STRATEGY.md (needs: BUSINESS_MODEL.md, MARKET_ANALYSIS.md)
+- GO_TO_MARKET_PLAN.md (needs: POSITIONING.md, VALUE_PROPOSITION.md)
+
+**Level 9 - User-Facing (Depends on Level 3-4):**
+- README.md (needs: PRODUCT_OVERVIEW.md, ARCHITECTURE_OVERVIEW.md outline)
+- QUICK_START_GUIDE.md (needs: README.md, ENGINEERING_GUIDE.md)
+- CLI_REFERENCE.md (needs: TECH_SPEC_MVP.md)
+- TUTORIALS.md (needs: USER_STORIES.md, QUICK_START_GUIDE.md)
+
+**Level 10 - Roadmaps (Depends on Level 3-4):**
+- MVP_ROADMAP.md (needs: PRD_MVP.md, SCOPE_DOCUMENT.md)
+- V1_ROADMAP.md (needs: MVP_ROADMAP.md, PRD_V1.md)
+
+## Auto-Detection Workflow
+
+### Step 1: Scan Project
+
+When user asks "What documents do I need?" or "What's missing?":
+
+1. **Scan `docs/` directory** for existing `.md` files
+2. **Scan project root** for README.md, PROJECT_EVALUATION.md, CONTRIBUTING.md
+3. **Identify project stage** (idea / in development / live)
+4. **Determine goal mode** (MVP / Production / Research / Dev Tooling / Balanced)
+
+### Step 2: Build Dependency Graph
+
+1. **List all 53 document types** from catalog
+2. **Check which exist** vs which are missing
+3. **Build dependency graph** - what depends on what
+4. **Identify blockers** - missing dependencies that block other docs
+5. **Calculate build order** - optimal sequence
+
+### Step 3: Present Findings
+
+**Format:**
+```
+📊 Documentation Status Report
+
+✅ Created (5):
+  - VISION.md
+  - README.md
+  - ...
+
+❌ Missing Critical (8):
+  Level 1 - Foundation:
+  - PROBLEM_STATEMENT.md ⚠️ BLOCKS: VALUE_PROPOSITION.md, USE_CASES.md
+  
+  Level 2 - Strategy:
+  - PRODUCT_OVERVIEW.md ⚠️ BLOCKS: PRD_MVP.md, SCOPE_DOCUMENT.md
+  
+  Level 3 - Requirements:
+  - PRD_MVP.md ⚠️ BLOCKS: ARCHITECTURE_OVERVIEW.md, TECH_SPEC_MVP.md
+
+🎯 Recommended Build Order:
+  1. PROBLEM_STATEMENT.md (foundation)
+  2. PRODUCT_OVERVIEW.md (needs: VISION.md ✅)
+  3. PRD_MVP.md (needs: PRODUCT_OVERVIEW.md)
+  4. ARCHITECTURE_OVERVIEW.md (needs: PRD_MVP.md)
+  ...
+
+📈 Progress: 5/53 documents (9.4%)
+```
+
+### Step 4: Offer to Generate
+
+**After showing status:**
+```
+Would you like me to:
+1. Generate the next critical document (PROBLEM_STATEMENT.md)?
+2. Generate all Level 1 foundation documents?
+3. Generate a complete documentation roadmap?
+4. Show detailed dependency tree?
+```
+
+## Smart Suggestions
+
+### Based on Project Stage
+
+**Idea Stage:**
+- Priority: Level 1-2 (Foundation + Strategy)
+- Suggest: VISION.md, PROBLEM_STATEMENT.md, PRODUCT_OVERVIEW.md
+
+**In Development:**
+- Priority: Level 3-4 (Requirements + Architecture)
+- Suggest: PRD_MVP.md, ARCHITECTURE_OVERVIEW.md, TECH_SPEC_MVP.md
+
+**Pre-Launch:**
+- Priority: Level 5-6 (Execution + Engineering)
+- Suggest: PIPELINE_MVP.md, ENGINEERING_GUIDE.md, DEPLOYMENT_RUNBOOK.md
+
+**Live/Production:**
+- Priority: Level 7-9 (Operations + User-Facing)
+- Suggest: OBSERVABILITY.md, TUTORIALS.md, TROUBLESHOOTING.md
+
+### Based on Goal Mode
+
+**MVP Fast:**
+- Focus: Level 1-3 (Foundation → Requirements)
+- Skip: Level 7-8 (Operations, Business details)
+
+**Production Stability:**
+- Focus: Level 5-7 (Execution → Operations)
+- Critical: FAILURE_MODES.md, OBSERVABILITY.md, DEPLOYMENT_RUNBOOK.md
+
+**Dev Tooling:**
+- Focus: Level 4, 9 (Architecture, User-Facing)
+- Critical: ARCHITECTURE_OVERVIEW.md, README.md, CLI_REFERENCE.md, TUTORIALS.md
+
+**Balanced:**
+- All levels, but prioritize by dependencies
+
+## Dependency Validation
+
+### Before Creating a Document
+
+**Check dependencies:**
+1. **List required documents** from dependency map
+2. **Verify they exist** or are being created
+3. **If missing:**
+   - Warn user: "⚠️ PRD_MVP.md depends on PRODUCT_OVERVIEW.md which is missing"
+   - Offer to create dependencies first
+   - Or proceed with `[TBD: ...]` markers if user insists
+
+### After Creating a Document
+
+**Update status:**
+1. **Mark document as created** ✅
+2. **Unblock dependent documents** - they can now be created
+3. **Suggest next steps** - "Now you can create ARCHITECTURE_OVERVIEW.md"
+
+## Progress Tracking
+
+### Maintain Status File
+
+**Optionally create:** `docs/DOCUMENTATION_STATUS.md`
+
+**Content:**
+```markdown
+# Documentation Status
+
+## Created ✅
+- VISION.md (2025-01-15)
+- README.md (2025-01-15)
+
+## In Progress 🚧
+- PRD_MVP.md (draft)
+
+## Missing ❌
+### Critical Path:
+1. PROBLEM_STATEMENT.md ⚠️ BLOCKS 3 documents
+2. PRODUCT_OVERVIEW.md ⚠️ BLOCKS 5 documents
+3. PRD_MVP.md ⚠️ BLOCKS 8 documents
+
+### Next Recommended:
+- PROBLEM_STATEMENT.md (no dependencies)
+- Then PRODUCT_OVERVIEW.md (needs: VISION.md ✅)
+```
+
+## Commands
+
+### "What documents do I need?"
+→ Show complete status report with dependencies
+
+### "What's missing?"
+→ Show missing critical documents with blockers
+
+### "Generate roadmap"
+→ Create DOCUMENTATION_ROADMAP.md with build order
+
+### "Check dependencies for [DOCUMENT]"
+→ Show what needs to exist before creating this document
+
+### "What can I create now?"
+→ Show documents that have all dependencies met
+
+### "Update status"
+→ Rescan and update documentation status
+
+## Integration with Workflow
+
+This system integrates with `workflow.mdc`:
+
+1. **Before Step 2 (Propose Scope):**
+   - Check dependencies
+   - Suggest missing prerequisites
+   - Offer to create them first
+
+2. **After Step 3 (Generate Document):**
+   - Update status
+   - Suggest next documents that are now unblocked
+   - Show progress
+
+## Key Rules
+
+1. **Always check dependencies** before creating documents
+2. **Suggest missing prerequisites** proactively
+3. **Show build order** - the puzzle sequence
+4. **Track progress** - what's done, what's next
+5. **Respect user choice** - if they want to skip dependencies, use `[TBD]` markers
+6. **Auto-detect on startup** - when user first interacts, show status
+7. **Update after each creation** - keep status current
+
+## Example Interaction
+
+**User:** "What documents do I need?"
+
+**System:**
+```
+📊 Documentation Status Report
+
+✅ Created (2):
+  - README.md
+  - VISION.md
+
+❌ Missing Critical (Foundation):
+  - PROBLEM_STATEMENT.md ⚠️ BLOCKS: VALUE_PROPOSITION.md, USE_CASES.md
+  - MARKET_ANALYSIS.md ⚠️ BLOCKS: POSITIONING.md, PRICING_STRATEGY.md
+
+🎯 Recommended Next Steps:
+  1. PROBLEM_STATEMENT.md (no dependencies, unblocks 2 docs)
+  2. MARKET_ANALYSIS.md (no dependencies, unblocks 2 docs)
+  3. PRODUCT_OVERVIEW.md (needs: VISION.md ✅)
+
+📈 Progress: 2/53 documents (3.8%)
+
+Would you like me to:
+1. Generate PROBLEM_STATEMENT.md now?
+2. Generate all Level 1 foundation documents?
+3. Show complete dependency tree?
+```
+
+---
+
+**Remember:** Documentation is like a puzzle - build in the right order, and everything fits together perfectly. 🧩
