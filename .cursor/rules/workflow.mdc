@@ -27,7 +27,36 @@ Gather essential information:
 - **For complex projects, offer a documentation roadmap first**, then generate docs one-by-one
 - **Show build order:** The correct sequence (like puzzle pieces) based on dependencies
 
-## Step 3: Generate ONE Document Per Response
+## Step 3: Generate Document(s)
+
+### For Starter Pack Requests
+
+**When user asks for starter pack** (e.g., "Create all documents needed for my idea"):
+1. **Identify stage** (idea / MVP / pre-launch / production)
+2. **Show starter pack contents** - List all documents that will be created
+3. **Show build order** - The sequence based on dependencies
+4. **Ask for confirmation** - "I'll create [X] documents for [stage]. Proceed?"
+5. **Generate documents one by one** in dependency order:
+   - Show each document content
+   - Ask for approval before creating
+   - After each creation, update status and suggest next
+   - Continue until all documents in pack are created
+
+**Example:**
+```
+User: "Create all documents needed for my idea"
+System: "I'll create 6 foundation documents for idea stage:
+        1. VISION.md (no dependencies)
+        2. PROBLEM_STATEMENT.md (no dependencies)
+        3. MARKET_ANALYSIS.md (no dependencies)
+        4. PRODUCT_OVERVIEW.md (needs: VISION.md)
+        5. VALUE_PROPOSITION.md (needs: PROBLEM_STATEMENT.md, MARKET_ANALYSIS.md)
+        6. ONE_PAGER.md (needs: PRODUCT_OVERVIEW.md)
+        
+        Proceed? I'll create them one by one, showing each before saving."
+```
+
+### For Single Document Requests
 
 **Before generating, check dependencies:**
 1. **Check dependency map** (see `document-dependencies.mdc`)
@@ -38,7 +67,6 @@ Gather essential information:
 - **Show document content in chat first** - Display the full document
 - **Ask before creating files** - "Should I create this file at `docs/[filename].md`?"
 - **Wait for user confirmation** - Only create file after explicit approval
-- For multi-doc needs: provide roadmap/checklist first, then create docs as requested
 
 **After creating a document:**
 - Update documentation status
@@ -78,18 +106,21 @@ To help you best, tell me:
 
 ## Common Requests
 
-1. **Full docs**: "Generate core documentation for my project: <description>"
+1. **Starter Pack**: "Create all documents needed for [idea/MVP/pre-launch/production]"
+   → **Generate complete starter pack:** Creates all required documents for that stage in correct dependency order
+   → **Example:** "Create all documents needed for my idea" → Generates 6 foundation documents
+2. **Full docs**: "Generate core documentation for my project: <description>"
    → **Auto-detect:** Show status, suggest build order, generate in dependency order
-2. **Single doc**: "Create a PRD / architecture / test plan for <project>"
+3. **Single doc**: "Create a PRD / architecture / test plan for <project>"
    → **Check dependencies:** Warn if prerequisites missing, offer to create them first
-3. **Specific doc type**: "Create VISION.md" or "Generate TECH_SPEC_MVP.md"
+4. **Specific doc type**: "Create VISION.md" or "Generate TECH_SPEC_MVP.md"
    → **Check dependencies:** Verify prerequisites, suggest missing ones
-4. **Evaluation**: "Evaluate this project and create PROJECT_EVALUATION.md"
-5. **Updates**: "Update the README with these changes: <details>"
-6. **Document list**: "What documents do I need?" → Show complete status with dependencies
-7. **What's missing?**: "What documents are missing?" → Auto-detect and show status report
-8. **What can I create now?**: Show documents with all dependencies met
-9. **Check dependencies**: "What does [DOCUMENT] depend on?" → Show dependency tree
+5. **Evaluation**: "Evaluate this project and create PROJECT_EVALUATION.md"
+6. **Updates**: "Update the README with these changes: <details>"
+7. **Document list**: "What documents do I need?" → Show complete status with dependencies
+8. **What's missing?**: "What documents are missing?" → Auto-detect and show status report
+9. **What can I create now?**: Show documents with all dependencies met
+10. **Check dependencies**: "What does [DOCUMENT] depend on?" → Show dependency tree
 
 **If vague:** Ask 2–5 focused questions, then start writing.
 

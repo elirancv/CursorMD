@@ -134,14 +134,15 @@ cd CursorMD
 Open Cursor IDE and simply ask:
 
 ```
-"Create VISION.md for my project"
-"Generate PRD_MVP.md"
-"What documents do I need?"  # Auto-detect missing docs
-"Create ARCHITECTURE_OVERVIEW.md"
+"Create all documents needed for my idea"  # Generate starter pack
+"Create VISION.md for my project"         # Single document
+"Generate PRD_MVP.md"                     # Single document
+"What documents do I need?"                # Auto-detect missing docs
 ```
 
 The AI will automatically:
 - Use the rules and generate professional documentation
+- **Create all required documents** for a stage (starter pack) in correct order
 - Check dependencies before creating documents
 - Suggest missing prerequisites if needed
 - Track progress and suggest next steps
@@ -154,6 +155,20 @@ The AI will automatically:
 ```
 Create VISION.md for my SaaS project - Task Management for small teams
 ```
+
+### Generate Starter Pack (All Documents for a Stage)
+```
+Create all documents needed for my idea
+Generate starter pack for MVP stage
+Create all documents needed for pre-launch
+Generate production documentation pack
+```
+
+**Starter Packs Available:**
+- **Idea Stage** → 6 foundation documents (VISION, PROBLEM_STATEMENT, MARKET_ANALYSIS, etc.)
+- **MVP Stage** → 8 MVP documents (PRD_MVP, ARCHITECTURE_OVERVIEW, TECH_SPEC_MVP, etc.)
+- **Pre-Launch** → 7 pre-launch documents (PIPELINE_MVP, DEPLOYMENT_RUNBOOK, etc.)
+- **Production** → 7 production documents (CI_CD_PIPELINE, OBSERVABILITY, etc.)
 
 ### Generate Multiple Documents
 ```

@@ -261,6 +261,68 @@ Would you like me to:
 - Then PRODUCT_OVERVIEW.md (needs: VISION.md ✅)
 ```
 
+## Starter Packs - Generate All Required Documents at Once
+
+### Idea Stage Starter Pack
+
+**When user asks:** "Create all documents needed for my idea" or "Generate starter pack for idea stage"
+
+**Generate these documents in order:**
+1. VISION.md (no dependencies)
+2. PROBLEM_STATEMENT.md (no dependencies)
+3. MARKET_ANALYSIS.md (no dependencies)
+4. PRODUCT_OVERVIEW.md (needs: VISION.md ✅)
+5. VALUE_PROPOSITION.md (needs: PROBLEM_STATEMENT.md ✅, MARKET_ANALYSIS.md ✅)
+6. ONE_PAGER.md (needs: PRODUCT_OVERVIEW.md ✅)
+
+**Total: 6 foundation documents**
+
+### MVP Stage Starter Pack
+
+**When user asks:** "Create all documents needed for MVP" or "Generate MVP documentation pack"
+
+**Generate these documents in order:**
+1. Idea Stage Starter Pack (6 docs) OR verify they exist
+2. PRD_MVP.md (needs: PRODUCT_OVERVIEW.md ✅, VISION.md ✅)
+3. USER_STORIES.md (needs: VALUE_PROPOSITION.md ✅)
+4. SCOPE_DOCUMENT.md (needs: PRODUCT_OVERVIEW.md ✅)
+5. ARCHITECTURE_OVERVIEW.md (needs: PRD_MVP.md ✅)
+6. TECH_SPEC_MVP.md (needs: PRD_MVP.md ✅, USER_STORIES.md ✅)
+7. MVP_ROADMAP.md (needs: PRD_MVP.md ✅, SCOPE_DOCUMENT.md ✅)
+8. README.md (needs: PRODUCT_OVERVIEW.md ✅, ARCHITECTURE_OVERVIEW.md outline ✅)
+
+**Total: 8 MVP documents (or 14 if starting from idea)**
+
+### Pre-Launch Starter Pack
+
+**When user asks:** "Create all documents needed before launch" or "Generate pre-launch documentation pack"
+
+**Generate these documents in order:**
+1. MVP Stage Starter Pack OR verify MVP docs exist
+2. PIPELINE_MVP.md (needs: TECH_SPEC_MVP.md ✅, ARCHITECTURE_OVERVIEW.md ✅)
+3. ENGINEERING_GUIDE.md (needs: ARCHITECTURE_OVERVIEW.md ✅, TECH_SPEC_MVP.md ✅)
+4. TEST_PLAN.md (needs: TECH_SPEC_MVP.md ✅, USER_STORIES.md ✅)
+5. DEPLOYMENT_RUNBOOK.md (needs: PIPELINE_MVP.md ✅)
+6. INFRASTRUCTURE_OVERVIEW.md (needs: ARCHITECTURE_OVERVIEW.md ✅)
+7. QUICK_START_GUIDE.md (needs: README.md ✅, ENGINEERING_GUIDE.md ✅)
+
+**Total: 7 pre-launch documents**
+
+### Production Starter Pack
+
+**When user asks:** "Create all documents needed for production" or "Generate production documentation pack"
+
+**Generate these documents in order:**
+1. Pre-Launch Starter Pack OR verify pre-launch docs exist
+2. CI_CD_PIPELINE.md (needs: PIPELINE_MVP.md ✅, TEST_PLAN.md ✅)
+3. OBSERVABILITY.md (needs: PIPELINE_MVP.md ✅, INFRASTRUCTURE_OVERVIEW.md ✅)
+4. FAILURE_MODES.md (needs: PIPELINE_MVP.md ✅, ARCHITECTURE_OVERVIEW.md ✅)
+5. SECURITY_GUIDELINES.md (needs: ARCHITECTURE_OVERVIEW.md ✅)
+6. TROUBLESHOOTING.md (needs: DEPLOYMENT_RUNBOOK.md ✅)
+7. TUTORIALS.md (needs: USER_STORIES.md ✅, QUICK_START_GUIDE.md ✅)
+
+**Total: 7 production documents**
+
 ## Commands
 
 ### "What documents do I need?"
@@ -271,6 +333,12 @@ Would you like me to:
 
 ### "Generate roadmap"
 → Create DOCUMENTATION_ROADMAP.md with build order
+
+### "Create all documents needed for [idea/MVP/pre-launch/production]"
+→ Generate starter pack for that stage (creates all required docs in correct order)
+
+### "Generate starter pack for [stage]"
+→ Same as above - creates all documents for that stage
 
 ### "Check dependencies for [DOCUMENT]"
 → Show what needs to exist before creating this document
