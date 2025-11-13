@@ -18,9 +18,18 @@ Gather essential information:
 2. Check dependencies (see `document-dependencies.mdc`)
 3. Identify missing critical documents
 4. Detect blockers (missing dependencies)
+5. **Auto-Implementation Check:** If documentation exists, check if code/implementation is missing (see `auto-implementation.mdc`)
+6. **Propose implementation:** If docs exist but code missing, propose creating code according to specifications
 
-## Step 2: Propose Documentation Scope
+## Step 2: Propose Documentation Scope OR Implementation
 
+**If documentation exists but code is missing:**
+- **First:** Show what documentation exists
+- **Then:** Show what code/implementation is missing according to docs
+- **Propose:** Creating code files according to specifications
+- **Auto-pilot mode:** Read docs and implement accordingly
+
+**If documentation is missing:**
 - **First:** Show documentation status (what exists, what's missing, what blocks what)
 - **Then:** Suggest 1-5 docs with 1-line rationale each
 - **Include:** Dependency warnings if prerequisites are missing

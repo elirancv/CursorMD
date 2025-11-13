@@ -49,3 +49,10 @@ _site/
 # Installation scripts output (if run in wrong directory)
 # Keep the scripts themselves
 
+# Example/test projects (not part of CursorMD repo)
+example-project/
+test-project/
+demo-project/
+importIdea/
+IMPORTIDEA/
+

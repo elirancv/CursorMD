@@ -6,6 +6,7 @@ This directory contains modular rule files for the Project Documentation Archite
 
 Each `.mdc` file focuses on a specific aspect of documentation creation:
 
+- **auto-implementation.mdc** - Auto-implement code from documentation (NEW!)
 - **core-identity.mdc** - Defines your role and core principles
 - **project-goal-modes.mdc** - How to adapt based on project goals (MVP, Production, etc.)
 - **workflow.mdc** - Step-by-step process for handling documentation requests

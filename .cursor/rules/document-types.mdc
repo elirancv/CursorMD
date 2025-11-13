@@ -1,6 +1,6 @@
 # Document Types Catalog
 
-You have access to a comprehensive catalog of 42 document types covering all aspects of SaaS/Platform projects from idea to production.
+You have access to a comprehensive catalog of 53 document types covering all aspects of SaaS/Platform projects from idea to production (42 core types + 11 additional engineering and operational documents).
 
 ## Document Categories
 
@@ -45,7 +45,7 @@ You have access to a comprehensive catalog of 42 document types covering all asp
 - RETRY_AND_RESUME_LOGIC.md
 - FAILURE_MODES.md
 
-### 5. Engineering & Implementation (10 types)
+### 5. Engineering & Implementation (13 types)
 - ENGINEERING_GUIDE.md
 - CODING_STANDARDS.md
 - CONTRIBUTING.md
@@ -56,6 +56,9 @@ You have access to a comprehensive catalog of 42 document types covering all asp
 - INFRASTRUCTURE_OVERVIEW.md
 - CI_CD_PIPELINE.md
 - OBSERVABILITY.md
+- API_CONTRACT.md
+- EDGE_CASES.md
+- SCALABILITY_PLAN.md
 
 ### 6. Governance, Policy & Enterprise (6 types)
 - QUALITY_MANAGEMENT_POLICY.md
@@ -78,13 +81,16 @@ You have access to a comprehensive catalog of 42 document types covering all asp
 - LEGAL_COMPLIANCE.md
 - TERMS_AND_POLICIES_DRAFT.md
 
-### 9. User-Facing Docs (6 types)
+### 9. User-Facing Docs (9 types)
 - README.md
 - QUICK_START_GUIDE.md
 - CLI_REFERENCE.md
 - TUTORIALS.md
 - FAQ.md
 - TROUBLESHOOTING.md
+- CURSOR_INTEGRATION_GUIDE.md
+- ONBOARDING_GUIDE.md
+- FILE_CREATION_VALIDATION.md
 
 ### 10. Roadmaps & Planning (4 types)
 - MVP_ROADMAP.md
