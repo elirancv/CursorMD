@@ -25,7 +25,7 @@ The system is built on three interconnected layers:
 ```
 ┌─────────────────────────────────────────┐
 │  Layer 1: Rules                         │
-│  .cursor/rules/*.mdc (12 files)         │
+│  .cursor/rules/*.mdc (13 files)         │
 │  ↓                                      │
 │  Layer 2: Knowledge Base                │
 │  docs/knowledge-base/ (2 files)         │
@@ -52,9 +52,10 @@ After installation, your project has:
 ```
 your-project/
 ├── .cursor/
-│   └── rules/                    # 12 rule files (.mdc)
+│   └── rules/                    # 13 rule files (.mdc)
 │       ├── core-identity.mdc
 │       ├── workflow.mdc
+│       ├── document-dependencies.mdc  # 🆕 Auto-detection & dependency tracking
 │       ├── file-organization.mdc
 │       ├── document-types.mdc
 │       ├── knowledge-base.mdc
@@ -85,6 +86,8 @@ your-project/
    - Understands all 53 document types
    - Knows file organization rules
    - Has access to knowledge base
+   - **Auto-detects missing documents** and tracks dependencies
+   - **Suggests build order** based on document dependencies
 
 3. **Ready to Use:**
    - System is immediately ready
@@ -116,45 +119,59 @@ your-project/
    - Confirms it's in the catalog of 53 types
    - Proceeds if valid
 
-3. **Context Gathering** (`core-identity.mdc`, `project-goal-modes.mdc`)
+3. **Dependency Check** (`document-dependencies.mdc`) 🆕
+   - Scans project for existing documentation files
+   - Checks if required dependencies exist
+   - Identifies blockers (missing prerequisites)
+   - Warns user if dependencies are missing
+   - Suggests creating dependencies first
+
+4. **Context Gathering** (`core-identity.mdc`, `project-goal-modes.mdc`)
    - Identifies role: "Project Documentation Architect"
    - Determines project goal mode (MVP/Production/etc.)
    - Checks for missing information (`missing-information.mdc`)
 
-4. **Template Retrieval** (`knowledge-base.mdc`)
+5. **Template Retrieval** (`knowledge-base.mdc`)
    - References `documentation_architect_reference.md`
    - Retrieves VISION.md template structure
    - Gets required sections and format
 
-5. **Document Generation**
+6. **Document Generation**
    - Fills template with project-specific content
    - Adapts depth based on goal mode
    - Uses `[TBD: ...]` for missing information
 
-6. **Quality Check** (`quality-standards.mdc`)
+7. **Quality Check** (`quality-standards.mdc`)
    - Validates document quality
    - Checks completeness
    - Ensures consistency
 
-7. **File Location** (`file-organization.mdc`)
+8. **File Location** (`file-organization.mdc`)
    - Determines correct location: `docs/VISION.md`
    - Validates path is allowed
    - Ensures proper organization
 
-8. **Output Formatting** (`output-rules.mdc`)
+9. **Output Formatting** (`output-rules.mdc`)
    - Formats as Markdown
    - Ensures proper structure
    - Validates formatting
 
-9. **User Approval** (`file-organization.mdc`)
-   - Shows document summary
-   - Requests user approval
-   - Waits for confirmation
+10. **User Approval** (`file-organization.mdc`)
+    - Shows document summary
+    - Requests user approval
+    - Waits for confirmation
 
-10. **File Creation**
+11. **File Creation**
     - Creates file only after approval
     - Logs operation
     - Confirms creation
+
+12. **Status Update** (`document-dependencies.mdc`) 🆕
+    - Updates documentation status
+    - Marks document as created
+    - Unblocks dependent documents
+    - Suggests next documents that can now be created
+    - Shows progress (X/53 documents)
 
 ---
 
@@ -175,6 +192,13 @@ User Request
 │ document-types.mdc              │
 │ - Validates document type       │
 │ - Checks catalog                │
+└───────────┬─────────────────────┘
+            ↓
+┌─────────────────────────────────┐
+│ document-dependencies.mdc 🆕    │
+│ - Scans existing docs           │
+│ - Checks dependencies           │
+│ - Identifies blockers           │
 └───────────┬─────────────────────┘
             ↓
 ┌─────────────────────────────────┐
@@ -233,6 +257,13 @@ User Request
 │ - Logs operation                │
 └───────────┬─────────────────────┘
             ↓
+┌─────────────────────────────────┐
+│ document-dependencies.mdc 🆕    │
+│ - Updates status                │
+│ - Unblocks dependent docs       │
+│ - Suggests next steps           │
+└───────────┬─────────────────────┘
+            ↓
          ✅ Done!
 ```
 
@@ -240,7 +271,7 @@ User Request
 
 ## Rule Files Explained
 
-### 12 Rule Files - What Each Does
+### 13 Rule Files - What Each Does
 
 #### 1. `core-identity.mdc`
 **Purpose:** Defines who the AI is
@@ -266,16 +297,42 @@ User Request
 - Handles different request types
 - Manages document generation process
 - Coordinates with other rules
+- **Integrates auto-detection** before proposing scope
+- **Checks dependencies** before generating documents
 
 **Key Content:**
-- Step 1: Clarify context
-- Step 2: Propose scope
-- Step 3: Generate document
-- Step 4: Stay project-specific
+- Step 1: Clarify context + Auto-detect missing docs
+- Step 2: Propose scope (with dependency warnings)
+- Step 3: Generate document (check dependencies first)
+- Step 4: Stay project-specific + Update status
 
 ---
 
-#### 3. `file-organization.mdc`
+#### 3. `document-dependencies.mdc` 🆕
+**Purpose:** Auto-detection, dependency tracking, and build order
+
+**What it does:**
+- Scans project for existing documentation files
+- Identifies missing critical documents
+- Tracks dependencies between documents
+- Suggests optimal build order (like puzzle pieces)
+- Detects blockers (missing prerequisites)
+- Updates progress after each document creation
+
+**Key Features:**
+- Auto-detection on startup or when asked
+- Dependency graph with 10 levels
+- Progress tracking (X/53 documents)
+- Smart suggestions based on project stage and goal mode
+
+**Example:**
+- Before creating `ARCHITECTURE_OVERVIEW.md`, checks if `PRD_MVP.md` exists
+- If missing, warns user and suggests creating it first
+- After creation, suggests next documents that are now unblocked
+
+---
+
+#### 4. `file-organization.mdc`
 **Purpose:** File placement rules (CRITICAL)
 
 **What it does:**
@@ -292,7 +349,7 @@ User Request
 
 ---
 
-#### 4. `document-types.mdc`
+#### 5. `document-types.mdc`
 **Purpose:** Catalog of all document types
 
 **What it does:**
@@ -315,7 +372,7 @@ User Request
 
 ---
 
-#### 5. `project-goal-modes.mdc`
+#### 6. `project-goal-modes.mdc`
 **Purpose:** Adapts documentation to project goals
 
 **What it does:**
@@ -333,7 +390,7 @@ User Request
 
 ---
 
-#### 6. `output-rules.mdc`
+#### 7. `output-rules.mdc`
 **Purpose:** Format and depth guidelines
 
 **What it does:**
@@ -350,7 +407,7 @@ User Request
 
 ---
 
-#### 7. `quality-standards.mdc`
+#### 8. `quality-standards.mdc`
 **Purpose:** Quality checklist and standards
 
 **What it does:**
@@ -368,7 +425,7 @@ User Request
 
 ---
 
-#### 8. `missing-information.mdc`
+#### 9. `missing-information.mdc`
 **Purpose:** How to handle unknowns
 
 **What it does:**
@@ -385,7 +442,7 @@ User Request
 
 ---
 
-#### 9. `meta-guardrails.mdc`
+#### 10. `meta-guardrails.mdc`
 **Purpose:** Operational rules and boundaries
 
 **What it does:**
@@ -402,7 +459,7 @@ User Request
 
 ---
 
-#### 10. `updating-docs.mdc`
+#### 11. `updating-docs.mdc`
 **Purpose:** Process for updating documents
 
 **What it does:**
@@ -419,7 +476,7 @@ User Request
 
 ---
 
-#### 11. `knowledge-base.mdc`
+#### 12. `knowledge-base.mdc`
 **Purpose:** Reference to knowledge base files
 
 **What it does:**
@@ -434,7 +491,7 @@ User Request
 
 ---
 
-#### 12. `main-goal.mdc`
+#### 13. `main-goal.mdc`
 **Purpose:** Primary objective
 
 **What it does:**
@@ -727,7 +784,28 @@ using Node.js and MongoDB, MVP goal is to validate the idea"
 - Never: Code directories
 - Always: Proper structure
 
-### 5. Architecture Diagrams
+### 5. Auto-Detection & Dependency Tracking 🆕
+
+**What it means:**
+- Automatically detects missing documents
+- Tracks dependencies between documents
+- Suggests optimal build order (like puzzle pieces)
+- Shows progress and next steps
+
+**How it works:**
+- Scans project on startup or when asked
+- Builds dependency graph (10 levels)
+- Identifies blockers and missing prerequisites
+- Updates status after each document creation
+- Suggests next documents based on dependencies
+
+**Benefits:**
+- Build documentation in correct order
+- Never miss critical documents
+- Understand what blocks what
+- Track progress automatically
+
+### 6. Architecture Diagrams
 
 **What it means:**
 - Support for architecture visualization
@@ -749,34 +827,55 @@ using Node.js and MongoDB, MVP goal is to validate the idea"
 
 ### Scenario: New Project Kickoff
 
+**Step 0: Auto-Detection** 🆕
+```
+You: "What documents do I need?"
+System: 📊 Documentation Status Report
+        ✅ Created (0)
+        ❌ Missing Critical: VISION.md, PROBLEM_STATEMENT.md, ...
+        🎯 Recommended Next: VISION.md → PROBLEM_STATEMENT.md → ...
+        📈 Progress: 0/53 documents (0%)
+```
+
 **Step 1: Vision**
 ```
 You: "Create VISION.md for my project: Task Management SaaS for small teams"
 System: [Shows summary]
 You: "Yes, create it"
 System: ✅ Created docs/VISION.md
+        📈 Progress: 1/53 documents (1.9%)
+        💡 Next suggested: PROBLEM_STATEMENT.md (no dependencies)
 ```
 
 **Step 2: Requirements**
 ```
 You: "Create PRD_MVP.md based on the VISION.md"
-System: [Reads VISION.md, generates PRD]
+System: [Checks dependencies - VISION.md ✅ exists]
+        [Reads VISION.md, generates PRD]
 You: "Yes, create it"
 System: ✅ Created docs/PRD_MVP.md
+        📈 Progress: 2/53 documents (3.8%)
+        💡 Next suggested: ARCHITECTURE_OVERVIEW.md (needs: PRD_MVP.md ✅)
 ```
 
 **Step 3: Architecture**
 ```
 You: "Create ARCHITECTURE_OVERVIEW.md for this project"
-System: [Generates architecture doc]
+System: [Checks dependencies - PRD_MVP.md ✅ exists]
+        [Generates architecture doc]
 You: "Yes, create it"
 System: ✅ Created docs/ARCHITECTURE_OVERVIEW.md
+        📈 Progress: 3/53 documents (5.7%)
+        💡 Next suggested: TECH_SPEC_MVP.md (needs: PRD_MVP.md ✅, ARCHITECTURE_OVERVIEW.md ✅)
 ```
 
 **Result:**
 - 3 professional documents created
 - Consistent structure
 - Project-specific content
+- Dependencies checked automatically
+- Progress tracked automatically
+- Next steps suggested automatically
 - Time: ~15 minutes (vs. 12+ hours manually)
 
 ---
@@ -824,15 +923,18 @@ System: ✅ Created docs/ARCHITECTURE_OVERVIEW.md
 
 ### How It Works in One Sentence
 
-**The system uses 12 rule files to configure Cursor AI, which references a knowledge base of templates to generate 53 types of professional, project-specific documentation.**
+**The system uses 13 rule files to configure Cursor AI, which references a knowledge base of templates to generate 53 types of professional, project-specific documentation, with automatic dependency tracking and build order suggestions.**
 
 ### Key Components
 
-1. **12 Rule Files** → Configure AI behavior
+1. **13 Rule Files** → Configure AI behavior (including auto-detection)
 2. **Knowledge Base** → Provides templates
 3. **53 Document Types** → Comprehensive coverage
-4. **Automatic Detection** → Cursor reads rules automatically
-5. **User Approval** → Always asks before creating files
+4. **Dependency Tracking** → Knows which documents depend on others
+5. **Auto-Detection** → Scans project and identifies missing documents
+6. **Build Order** → Suggests optimal sequence (like puzzle pieces)
+7. **Automatic Detection** → Cursor reads rules automatically
+8. **User Approval** → Always asks before creating files
 
 ### The Magic
 
