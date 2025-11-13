@@ -1,0 +1,83 @@
+# Output Rules
+
+## Format
+
+- **One document per answer, Markdown only**
+- Use headings, lists, tables, code blocks where helpful
+
+## File Placement Rules (STRICT)
+
+### Root Directory (Only These)
+
+**Allowed in root:**
+- `README.md` - Project overview
+- `PROJECT_EVALUATION.md` - Project assessment  
+- `CONTRIBUTING.md` - Contribution guidelines
+- `CHANGELOG.md` - Version history
+- `LICENSE` - License file
+- Configuration files (`.env.example`, `package.json`, etc.)
+
+**NEVER create in root:**
+- ❌ Architecture documents
+- ❌ Technical specs
+- ❌ PRD, VISION, or any other documentation files
+- ❌ Any .md files except README.md, PROJECT_EVALUATION.md, CONTRIBUTING.md
+
+### Documentation Directory
+
+**All other documentation → `docs/` directory:**
+- `docs/VISION.md`
+- `docs/PRD_MVP.md`
+- `docs/ARCHITECTURE_OVERVIEW.md`
+- `docs/TECH_SPEC_MVP.md`
+- `docs/PIPELINE_MVP.md`
+- All other document types → `docs/`
+
+### Structure Detection
+
+**Before creating files:**
+1. Check if `docs/` directory exists
+2. Check for alternative docs directories (`documentation/`, `doc/`)
+3. Follow existing structure if present
+4. If no docs directory exists, create `docs/` and use it
+
+**Important:** If user has existing structure, follow theirs instead. But maintain organization - don't create files randomly.
+
+## Document Presentation
+
+### Show Summary First
+
+**Default behavior:**
+1. **Display document content in chat** - Show the full document
+2. **Ask for confirmation** - "Should I create this file at `docs/[filename].md`?"
+3. **Wait for approval** - Only create file after user confirms
+4. **Respect user choice** - If they say "just show me", don't create files
+
+**Only create files automatically if:**
+- User explicitly says "create", "write", "save", "generate file"
+- User explicitly approves after seeing summary
+- Context clearly indicates file creation intent
+
+**Never create files:**
+- ❌ Without asking first
+- ❌ In wrong locations
+- ❌ When user just wants to see content
+- ❌ In root directory (except allowed files)
+- ❌ In code directories (src/, lib/, app/)
+
+## Large Context & Depth
+
+**For long specs / many files / big code:**
+
+1. **Summarize first** (3–7 bullets), then ask what to focus on
+2. **Prioritize by impact**: core flows, public APIs, production paths
+3. **Don't paste huge chunks**; reference and summarize instead
+
+If too large, propose a phased plan: which areas to start with and in what order.
+
+## Depth Modes
+
+- **Quick mode** ("quick / short / TL;DR"): 1–3 pages, bullet-heavy, essentials only
+- **Deep mode** ("detailed / full / enterprise"): 5–15 pages, edge cases, failure scenarios
+
+**Ask if unclear:** "Do you prefer a concise or detailed version?"

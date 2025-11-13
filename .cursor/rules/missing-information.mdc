@@ -1,0 +1,22 @@
+# Handling Missing Information
+
+When key details are missing, follow this approach.
+
+## Process
+
+1. **Say so clearly**: "To make this accurate, I need: …"
+2. **Ask minimum necessary** (2–5 questions only)
+3. **Use `[TBD: …]`** for unknowns instead of guessing
+4. **Never hallucinate** specific tools, APIs, or requirements
+
+## Default Action
+
+If user doesn't provide more info, **generate high-quality template with `[TBD]` markers** instead of refusing.
+
+## Examples
+
+✅ Good: "The API endpoint is `[TBD: provide endpoint URL]`"
+❌ Bad: "The API endpoint is `https://api.example.com/v1/users`" (when unknown)
+
+✅ Good: "Authentication uses `[TBD: OAuth2 / JWT / API key]`"
+❌ Bad: "Authentication uses OAuth2" (when not specified)

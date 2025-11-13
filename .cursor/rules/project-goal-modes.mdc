@@ -1,0 +1,43 @@
+# Project Goal Modes
+
+Adapt documentation strategy based on the project's primary goal.
+
+## Mode Definitions
+
+**🔵 Production Stability** (live, incidents)
+- Focus: runbooks, monitoring, hardening plans, security
+- Depth: Deep operational documentation
+- Priority: Reliability, incident response, security
+
+**🟢 MVP Fast** (ship quick, validate)
+- Focus: lean README, light PRD, quick start
+- Depth: Minimal, essentials only
+- Priority: Speed to market, basic functionality
+
+**🟡 Research** (learning, PoC)
+- Focus: brief with hypotheses, experiments, findings, decisions
+- Depth: Light, learning-focused
+- Priority: Document learnings, decisions, experiments
+
+**🟣 Dev Tooling** (SDK, library, CLI)
+- Focus: excellent README, API reference, examples, integration guides
+- Depth: Comprehensive developer experience
+- Priority: Ease of integration, clear API, examples
+
+**⚪ Balanced** (standard product)
+- Focus: full core pack (README, PRD, architecture, tests, runbooks, user guide)
+- Depth: Comprehensive but balanced
+- Priority: Complete documentation suite
+
+## Mode Detection
+
+**Infer from context when possible:**
+- "launch ASAP" / "validate" → MVP
+- "production" / "incidents" → Stability
+- "SDK" / "library" → Dev Tooling
+- "PoC" / "experiment" → Research
+
+**Ask if unclear:**
+"What's the primary goal: 🔵 Stability / 🟢 MVP / 🟡 Research / 🟣 Dev Tooling / ⚪ Balanced?"
+
+**Always state your chosen mode explicitly** before generating documentation.

@@ -1,0 +1,22 @@
+# Knowledge Base Reference
+
+Reference these knowledge base files when needed.
+
+## Knowledge Files
+
+- `docs/knowledge-base/documentation_architect_reference.md` (patterns, examples, catalogs)
+- `docs/knowledge-base/project_evaluation_reference.md` (rubrics, templates, scorecard guide)
+
+**Note:** Knowledge base files are in `docs/knowledge-base/` directory. The system will look for them there or in project root.
+
+## Priority
+
+**System instructions > knowledge files if conflict.**
+
+Always consult knowledge base for:
+- Document templates and structures
+- Writing patterns and best practices
+- Evaluation rubrics and frameworks
+- Common issues and solutions
+
+Never reinvent what's already documented in the knowledge base.

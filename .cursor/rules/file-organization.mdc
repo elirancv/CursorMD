@@ -1,0 +1,200 @@
+# File Organization & Project Structure
+
+Maintain perfect project organization. Never create files in wrong locations.
+
+## Critical Rule: Ask Before Writing
+
+**ALWAYS ask the user before creating/writing files:**
+
+1. **Show summary first** - Display the document content in chat
+2. **Ask for confirmation** - "Should I create this file at [location]?"
+3. **Wait for explicit approval** - Only write files after user confirms
+4. **Respect user's choice** - If they say "just show me", don't write files
+
+**Exception:** Only write files automatically if user explicitly says "create", "write", "save", or "generate file".
+
+## File Placement Rules
+
+### Root Directory Files (Only These)
+
+**Allowed in root:**
+- `README.md` - Project overview
+- `PROJECT_EVALUATION.md` - Project assessment
+- `CONTRIBUTING.md` - Contribution guidelines
+- `CHANGELOG.md` - Version history
+- `LICENSE` - License file
+- `.gitignore` - Git ignore rules
+- `.cursorrules` - Cursor rules (legacy)
+- Configuration files (`.env.example`, `package.json`, etc.)
+
+**NEVER create in root:**
+- ❌ Scripts (use `scripts/` directory)
+- ❌ Tools or utilities (use `scripts/` or `tools/` directory)
+- ❌ Documentation files (except README.md, PROJECT_EVALUATION.md, CONTRIBUTING.md, CHANGELOG.md)
+- ❌ Architecture documents
+- ❌ Technical specs
+- ❌ Any other .md files (except allowed ones above)
+
+### Documentation Directory Structure
+
+**Standard structure:**
+```
+project-root/
+├── README.md                    # ✅ Root (allowed)
+├── PROJECT_EVALUATION.md        # ✅ Root (allowed)
+├── CONTRIBUTING.md              # ✅ Root (allowed)
+├── docs/                        # ✅ All other docs go here
+│   ├── ARCHITECTURE_OVERVIEW.md
+│   ├── PRD_MVP.md
+│   ├── TECH_SPEC_MVP.md
+│   ├── VISION.md
+│   └── ... (all other docs)
+└── ... (other project files)
+```
+
+### Document Type → Location Mapping
+
+| Document Type | Location | Notes |
+|--------------|----------|-------|
+| README.md | Root | ✅ Always root |
+| PROJECT_EVALUATION.md | Root | ✅ Always root |
+| CONTRIBUTING.md | Root | ✅ Always root |
+| VISION.md | `docs/` | ✅ docs/ |
+| PRD_*.md | `docs/` | ✅ docs/ |
+| ARCHITECTURE_*.md | `docs/` | ✅ docs/ |
+| TECH_SPEC_*.md | `docs/` | ✅ docs/ |
+| PIPELINE_*.md | `docs/` | ✅ docs/ |
+| All other docs | `docs/` | ✅ docs/ |
+
+## Existing Structure Detection
+
+**Before creating files:**
+
+1. **Check existing structure:**
+   - Does `docs/` directory exist?
+   - Is there a different docs structure (e.g., `documentation/`, `doc/`)?
+   - Are there existing docs in root that shouldn't be there?
+
+2. **Follow existing structure:**
+   - If `docs/` exists → use it
+   - If `documentation/` exists → use it
+   - If `doc/` exists → use it
+   - If no docs directory → create `docs/` and use it
+
+3. **Never create random locations:**
+   - ❌ Don't create files in random directories
+   - ❌ Don't create files in `src/`, `lib/`, `app/` unless explicitly requested
+   - ❌ Don't create files in root unless it's an allowed file
+
+## File Naming Conventions
+
+**Follow these naming rules:**
+
+- **UPPERCASE for important docs:** `VISION.md`, `PRD_MVP.md`, `ARCHITECTURE_OVERVIEW.md`
+- **kebab-case for guides:** `quick-start-guide.md`, `api-reference.md`
+- **Consistent naming:** Use same pattern throughout project
+- **No spaces:** Use underscores or hyphens, never spaces
+- **Clear names:** Document name should clearly indicate its purpose
+
+## Project Organization Principles
+
+### 1. Keep Root Clean
+
+**Root directory should contain:**
+- Essential project files only
+- Configuration files
+- README and core docs (README.md, CONTRIBUTING.md, etc.)
+- **NOT** documentation files
+
+### 2. Organize by Purpose
+
+**Group related files:**
+- Architecture docs together
+- Product docs together
+- Technical specs together
+- User guides together
+
+### 3. Avoid Duplication
+
+**Never create:**
+- Multiple versions of same document
+- Duplicate files in different locations
+- Files that already exist (update instead)
+
+### 4. Respect Project Type
+
+**Different project types have different structures:**
+
+- **Library/Package:** May have `docs/` or use root for some docs
+- **Application:** Usually `docs/` for all documentation
+- **Monorepo:** May have docs per package
+- **Follow the project's existing pattern**
+
+## Before Creating Any File
+
+**Checklist:**
+
+1. ✅ **Is this file needed?** - Does user explicitly want it created?
+2. ✅ **Is location correct?** - Does it follow placement rules?
+3. ✅ **Does it exist?** - Check if file already exists
+4. ✅ **Is structure correct?** - Does it match project structure?
+5. ✅ **User approved?** - Did user confirm creation?
+
+## Summary vs. File Creation
+
+### When to Show Summary Only
+
+**Show summary (don't create file) when:**
+- User asks "what would X look like?"
+- User asks "show me Y"
+- User asks "what's in Z?"
+- User hasn't explicitly asked to create/save
+- User is exploring options
+
+**Example prompts:**
+- "What would a PRD look like?" → Show summary, don't create
+- "Show me an architecture doc" → Show summary, don't create
+- "What's in VISION.md?" → Show summary, don't create
+
+### When to Create File
+
+**Create file only when:**
+- User says "create", "write", "save", "generate file"
+- User explicitly approves after seeing summary
+- User asks to "add" or "update" existing file
+- Context clearly indicates file creation intent
+
+**Example prompts:**
+- "Create PRD_MVP.md" → Create file
+- "Write architecture doc" → Create file
+- "Save this as VISION.md" → Create file
+- "Generate TECH_SPEC_MVP.md" → Create file
+
+## Error Prevention
+
+**Never:**
+- ❌ Create files without asking
+- ❌ Create files in wrong locations
+- ❌ Create duplicate files
+- ❌ Create files in root (except allowed ones)
+- ❌ Create files in code directories (src/, lib/, app/)
+- ❌ Create random .md files anywhere
+
+**Always:**
+- ✅ Show summary first
+- ✅ Ask for confirmation
+- ✅ Use correct location
+- ✅ Follow existing structure
+- ✅ Maintain clean organization
+
+## Default Behavior
+
+**When in doubt:**
+1. Show document content in chat
+2. Ask: "Should I create this file at `docs/[filename].md`?"
+3. Wait for user confirmation
+4. Only then create the file
+
+---
+
+**Remember: Perfect organization is more important than speed. Always maintain clean, logical file structure.**

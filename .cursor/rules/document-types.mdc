@@ -1,0 +1,123 @@
+# Document Types Catalog
+
+You have access to a comprehensive catalog of 42 document types covering all aspects of SaaS/Platform projects from idea to production.
+
+## Document Categories
+
+### 1. Vision & Strategy (8 types)
+- VISION.md
+- PRODUCT_OVERVIEW.md
+- ONE_PAGER.md
+- PROBLEM_STATEMENT.md
+- MARKET_ANALYSIS.md
+- POSITIONING.md
+- VALUE_PROPOSITION.md
+- USE_CASES.md
+
+### 2. Product Requirements (6 types)
+- PRD_MVP.md
+- PRD_V1.md
+- SCOPE_DOCUMENT.md
+- USER_STORIES.md
+- ACCEPTANCE_CRITERIA.md
+- PRODUCT_FEATURE_LIST.md
+
+### 3. Architecture & System Design (13 types)
+- ARCHITECTURE_OVERVIEW.md
+- SYSTEM_COMPONENTS.md
+- SYSTEM_DIAGRAMS.md
+- TECH_SPEC_MVP.md (12 sections)
+- TECH_SPEC_V1_ENTERPRISE.md
+- ORCHESTRATOR_SPEC.md
+- AGENT_CONTRACT_SPEC.md
+- ADVISOR_CONTRACT_SPEC.md
+- QUALITY_GATE_SPEC.md
+- POLICY_ENGINE_SPEC.md
+- DATA_MODEL.md
+- ARTIFACT_MODEL.md
+- EVENTLOG_SCHEMA.md
+- MANIFEST_SCHEMA.md
+
+### 4. Execution & Pipelines (5 types)
+- PIPELINE_MVP.md
+- PIPELINE_V1.md
+- EXECUTION_MODEL.md
+- RETRY_AND_RESUME_LOGIC.md
+- FAILURE_MODES.md
+
+### 5. Engineering & Implementation (10 types)
+- ENGINEERING_GUIDE.md
+- CODING_STANDARDS.md
+- CONTRIBUTING.md
+- TEST_PLAN.md
+- SMOKE_TEST_SUITE.md
+- LLM_EVALUATION_TESTS.md
+- DEPLOYMENT_RUNBOOK.md
+- INFRASTRUCTURE_OVERVIEW.md
+- CI_CD_PIPELINE.md
+- OBSERVABILITY.md
+
+### 6. Governance, Policy & Enterprise (6 types)
+- QUALITY_MANAGEMENT_POLICY.md
+- POLICY_DEFINITION_GUIDE.md
+- COUNCIL_DESIGN.md
+- SECURITY_GUIDELINES.md
+- DATA_PRIVACY.md
+- ACCESS_CONTROL_ARCHITECTURE.md
+
+### 7. Business & Financial (6 types)
+- BUSINESS_MODEL.md
+- PRICING_STRATEGY.md
+- GO_TO_MARKET_PLAN.md
+- COST_STRUCTURE.md
+- UNIT_ECONOMICS.md
+- MONETIZATION_PLAN.md
+
+### 8. Legal & Risks (3 types)
+- RISK_REGISTER.md
+- LEGAL_COMPLIANCE.md
+- TERMS_AND_POLICIES_DRAFT.md
+
+### 9. User-Facing Docs (6 types)
+- README.md
+- QUICK_START_GUIDE.md
+- CLI_REFERENCE.md
+- TUTORIALS.md
+- FAQ.md
+- TROUBLESHOOTING.md
+
+### 10. Roadmaps & Planning (4 types)
+- MVP_ROADMAP.md
+- V1_ROADMAP.md
+- FEATURE_BACKLOG.md
+- RELEASE_PLAN.md
+
+## How to Use This Catalog
+
+When a user requests a document:
+
+1. **Identify the document type** from the catalog above
+2. **Reference the detailed structure** in `docs/knowledge-base/documentation_architect_reference.md`
+3. **Generate the document** following the specified structure
+4. **Adapt to project context** - use real project details, not generic templates
+5. **Use [TBD] markers** for missing information instead of guessing
+
+## Recommended Starting Set
+
+For new projects, suggest starting with these 5 documents:
+1. VISION.md
+2. PRD_MVP.md
+3. ARCHITECTURE_OVERVIEW.md
+4. TECH_SPEC_MVP.md
+5. PIPELINE_MVP.md
+
+Then generate additional documents as needed based on project requirements.
+
+## Document Generation Rules
+
+- **One document per response** (unless user explicitly requests multiple)
+- **Follow the structure** defined in `docs/knowledge-base/documentation_architect_reference.md`
+- **Stay project-specific** - adapt templates to actual project context
+- **Use appropriate depth** based on project goal mode (MVP vs Production)
+- **Include all required sections** from the template
+- **Mark unknowns with [TBD: ...]** instead of inventing details

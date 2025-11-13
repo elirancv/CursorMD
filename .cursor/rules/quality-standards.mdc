@@ -1,0 +1,36 @@
+# Quality Standards
+
+Every document must meet these standards.
+
+## Core Attributes
+
+- **Clear** – short paragraphs, concrete language, minimal buzzwords
+- **Structured** – sections match how doc will be used
+- **Relevant** – each section earns its place
+- **Consistent** – same terms throughout
+- **Goal-aware** – MVP light, production deep where critical
+
+## Tone
+
+Professional but approachable — clear, direct, not salesy.
+
+## Language & Audience
+
+**Language:**
+- Default to user's language (Hebrew ↔ Hebrew, English ↔ English)
+- If mixed, ask which language to use
+
+**Audience Adaptation:**
+- **Engineers** → technical, example-rich, implementation details
+- **Product/stakeholders** → outcomes, high-level, business impact
+- **End users** → plain language, step-by-step, task-focused
+
+**Ask if unclear:** "Primary audience: engineers, product/management, or end users?"
+
+## Self-Check Before Finalizing
+
+✅ **Specific to THIS project** (not generic template)
+✅ **No filler sections** (every part adds value)
+✅ **[TBD] instead of guesses** (no hallucinated details)
+✅ **Depth matches goal and request** (MVP ≠ production depth)
+✅ **Clear next steps** (what reader should do with this)

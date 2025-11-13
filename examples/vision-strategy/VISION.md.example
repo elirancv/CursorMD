@@ -1,0 +1,142 @@
+# VISION.md - Example
+
+This is a complete example of a VISION document for a fictional project: **AI Code Generator Platform**
+
+---
+
+# Vision: AI Code Generator Platform
+
+## Vision Statement
+
+We envision a world where software development teams can transform ideas into production-ready repositories in minutes, not months. Our AI-powered platform eliminates the friction between concept and code, enabling developers to focus on innovation while automated systems handle the heavy lifting of architecture, implementation, testing, and documentation.
+
+## Mission & Purpose
+
+**Mission:** To democratize software development by providing an autonomous software factory that transforms high-level requirements into complete, production-ready codebases.
+
+**Purpose:** 
+- Accelerate time-to-market for new software projects
+- Reduce the cognitive load on development teams
+- Ensure consistent quality and best practices across all generated code
+- Bridge the gap between product vision and technical implementation
+
+## Target Audience & Personas
+
+### Primary Personas
+
+**1. Startup Founders & Product Managers**
+- Need to validate ideas quickly
+- Limited technical resources
+- Want to focus on product-market fit, not infrastructure
+
+**2. Enterprise Development Teams**
+- Need to standardize development practices
+- Want to accelerate project kickoff
+- Require consistent architecture patterns
+
+**3. Freelance Developers & Agencies**
+- Need to deliver projects faster
+- Want to maintain quality while scaling
+- Require reusable templates and patterns
+
+**4. Technical Leads & Architects**
+- Need to enforce best practices
+- Want to reduce boilerplate work
+- Require governance and quality controls
+
+## Transformation & Impact
+
+### Current State (Pain Points)
+- **Weeks to months** to go from idea to working prototype
+- **Inconsistent** architecture and code quality
+- **Repetitive** boilerplate work consumes developer time
+- **Knowledge silos** prevent best practice sharing
+- **High cognitive load** on developers for routine tasks
+
+### Future State (With Our Platform)
+- **Minutes to hours** from idea to working repository
+- **Consistent** quality and architecture patterns
+- **Automated** boilerplate generation
+- **Shared knowledge** through templates and advisors
+- **Reduced cognitive load** - focus on unique business logic
+
+### Impact Metrics
+- **90% reduction** in time from idea to first commit
+- **80% reduction** in initial setup and boilerplate work
+- **Consistent quality** across all generated projects
+- **Faster iteration** cycles for product validation
+
+## Long-term Goals (3-5 Years)
+
+### Year 1: Foundation
+- Launch MVP with core pipeline (Idea → Repo)
+- Support 5+ common project types
+- Achieve 1000+ repositories generated
+- Build community of early adopters
+
+### Year 2: Scale & Enhance
+- Add advisor system for quality guidance
+- Support 20+ project types and frameworks
+- Enterprise features (policies, governance)
+- 10,000+ repositories generated
+
+### Year 3: Intelligence & Ecosystem
+- Advanced AI advisors with domain expertise
+- Marketplace for templates and advisors
+- Integration with popular development tools
+- 100,000+ repositories generated
+
+### Year 4-5: Platform Leadership
+- Industry standard for AI-assisted development
+- Comprehensive ecosystem of tools and integrations
+- Global developer community
+- Transform how software is built
+
+## Success Metrics
+
+### User Adoption
+- **Active Users:** 10,000+ developers by end of Year 1
+- **Repositories Generated:** 1,000+ in Year 1
+- **User Retention:** 60%+ monthly active users
+
+### Quality Metrics
+- **Code Quality Score:** Average 8/10+ across all generated repos
+- **Test Coverage:** 80%+ for all generated projects
+- **Documentation Completeness:** 100% of required docs generated
+
+### Business Metrics
+- **Time to First Commit:** < 1 hour (vs. days/weeks)
+- **User Satisfaction:** 4.5/5+ average rating
+- **Net Promoter Score:** 50+
+
+### Technical Metrics
+- **Pipeline Success Rate:** 95%+ successful completions
+- **Average Generation Time:** < 30 minutes per repository
+- **System Uptime:** 99.9% availability
+
+## Core Principles
+
+1. **Quality First:** Never compromise on code quality or best practices
+2. **Developer Experience:** Make complex things simple, not simple things complex
+3. **Transparency:** Users understand what's generated and why
+4. **Flexibility:** Support multiple approaches and frameworks
+5. **Continuous Improvement:** Learn from usage and improve continuously
+
+## Why Now?
+
+### Market Timing
+- **AI Maturity:** LLMs now capable of generating production-quality code
+- **Developer Shortage:** Need to maximize productivity of existing developers
+- **Acceleration:** Market demands faster iteration and delivery
+- **Tooling Evolution:** Development tools ready for AI integration
+
+### Technology Readiness
+- **LLM APIs:** Mature and accessible (OpenAI, Anthropic, etc.)
+- **Code Generation:** Proven capabilities in production
+- **Infrastructure:** Cloud platforms ready for AI workloads
+- **Developer Adoption:** Community ready for AI-assisted development
+
+---
+
+**This vision drives everything we build. Every feature, every decision, every line of code serves this mission.**
+

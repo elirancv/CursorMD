@@ -1,0 +1,742 @@
+# TECH_SPEC_MVP.md - Example
+
+This is a complete example of a TECH_SPEC_MVP document with all 12 sections for: **AI Code Generator Platform - MVP**
+
+---
+
+# Technical Specification: MVP
+
+## 1. System Overview
+
+### 1.1 Purpose
+This document specifies the technical architecture and implementation details for the AI Code Generator Platform MVP. The system transforms natural language product descriptions into complete, production-ready GitHub repositories.
+
+### 1.2 Scope
+- **In Scope:** Core pipeline from idea to repository (8 stages)
+- **Out of Scope:** Advisor system, policy engine, web UI, enterprise features
+- **Target:** Generate 100+ repositories in first 3 months
+
+### 1.3 Key Requirements
+- Generate complete codebase from natural language input
+- Support 4 project types (REST API, Web App, CLI, Library)
+- Quality score ≥ 7/10 for all generated code
+- Pipeline execution time < 1 hour
+- 90%+ pipeline success rate
+
+### 1.4 Constraints
+- MVP: Single server deployment
+- LLM API: OpenAI GPT-4 (cost considerations)
+- GitHub API: Rate limits (5000 requests/hour)
+- Storage: AWS S3 (cost-effective)
+
+---
+
+## 2. Architecture & Design
+
+### 2.1 High-Level Architecture
+
+```
+┌─────────────────────────────────────────┐
+│         CLI Interface                    │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│      Pipeline Orchestrator               │
+│      - State Machine (FSM)               │
+│      - Stage Coordination                │
+│      - Error Handling                    │
+└──────────────┬──────────────────────────┘
+               │
+    ┌──────────┼──────────┐
+    │          │          │
+┌───▼───┐  ┌───▼───┐  ┌───▼───┐
+│ PRD   │  │Arch   │  │ Code  │
+│ Agent │  │Agent  │  │ Agent │
+└───────┘  └───────┘  └───────┘
+    │          │          │
+    └──────────┼──────────┘
+               │
+    ┌──────────▼──────────┐
+    │   LLM API (OpenAI)   │
+    └──────────────────────┘
+```
+
+### 2.2 Component Design
+
+**Pipeline Orchestrator:**
+- Manages pipeline state machine
+- Coordinates stage execution
+- Handles errors and retries
+- Maintains pipeline context
+
+**Generation Agents:**
+- PRD Agent: Generates Product Requirements Document
+- Architecture Agent: Designs system architecture
+- Code Agent: Generates source code
+- Test Agent: Generates tests
+- Documentation Agent: Generates docs
+- Quality Agent: Runs quality checks
+- Repository Agent: Creates GitHub repo
+
+### 2.3 Data Flow
+
+1. User input → CLI → Orchestrator
+2. Orchestrator → PRD Agent → LLM API → PRD
+3. Orchestrator → Architecture Agent → LLM API → Architecture
+4. Orchestrator → Code Agent → LLM API → Code files
+5. Orchestrator → Test Agent → LLM API → Test files
+6. Orchestrator → Docs Agent → LLM API → Documentation
+7. Orchestrator → Quality Agent → Quality checks → Score
+8. Orchestrator → Repo Agent → GitHub API → Repository
+
+### 2.4 State Management
+
+**Pipeline States:**
+- `INITIALIZED` - Pipeline created, ready to start
+- `PROCESSING_INPUT` - Parsing user input
+- `GENERATING_PRD` - Creating PRD
+- `GENERATING_ARCHITECTURE` - Designing architecture
+- `GENERATING_CODE` - Generating source code
+- `GENERATING_TESTS` - Creating tests
+- `GENERATING_DOCS` - Creating documentation
+- `QUALITY_CHECK` - Running quality gates
+- `CREATING_REPO` - Creating GitHub repository
+- `COMPLETED` - Pipeline finished successfully
+- `FAILED` - Pipeline failed (with error details)
+
+---
+
+## 3. Technology Stack
+
+### 3.1 Core Technologies
+
+**Runtime:** Node.js 18+
+- **Rationale:** Rich ecosystem, good LLM API clients, excellent GitHub integration
+
+**Language:** TypeScript 5+
+- **Rationale:** Type safety for complex system, better IDE support, catch errors early
+
+**Package Manager:** npm
+- **Rationale:** Standard for Node.js, good dependency management
+
+### 3.2 Key Libraries
+
+**CLI Framework:** Commander.js
+```typescript
+import { Command } from 'commander';
+```
+
+**LLM Client:** OpenAI SDK
+```typescript
+import OpenAI from 'openai';
+```
+
+**GitHub Integration:** @octokit/rest
+```typescript
+import { Octokit } from '@octokit/rest';
+```
+
+**State Management:** Custom FSM
+```typescript
+class PipelineOrchestrator {
+  private state: PipelineState;
+  private stateMachine: StateMachine;
+}
+```
+
+**Storage:** AWS SDK for S3
+```typescript
+import { S3Client } from '@aws-sdk/client-s3';
+```
+
+**Queue:** Redis (ioredis)
+```typescript
+import Redis from 'ioredis';
+```
+
+### 3.3 Development Tools
+
+**Testing:** Jest
+```json
+{
+  "testFramework": "jest",
+  "coverageThreshold": {
+    "global": {
+      "branches": 70,
+      "functions": 70,
+      "lines": 70,
+      "statements": 70
+    }
+  }
+}
+```
+
+**Linting:** ESLint + Prettier
+```json
+{
+  "eslintConfig": {
+    "extends": ["@typescript-eslint/recommended"]
+  }
+}
+```
+
+**Build:** TypeScript Compiler
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src"
+  }
+}
+```
+
+---
+
+## 4. Data Models
+
+### 4.1 Pipeline Context
+
+```typescript
+interface PipelineContext {
+  id: string;
+  userId: string;
+  input: {
+    description: string;
+    projectType: ProjectType;
+    preferences?: UserPreferences;
+  };
+  stages: {
+    prd?: PRDOutput;
+    architecture?: ArchitectureOutput;
+    code?: CodeOutput;
+    tests?: TestOutput;
+    docs?: DocsOutput;
+    quality?: QualityOutput;
+  };
+  state: PipelineState;
+  metadata: {
+    createdAt: Date;
+    updatedAt: Date;
+    startedAt?: Date;
+    completedAt?: Date;
+    error?: ErrorDetails;
+  };
+}
+```
+
+### 4.2 Project Types
+
+```typescript
+enum ProjectType {
+  REST_API = 'rest-api',
+  WEB_APP = 'web-app',
+  CLI_TOOL = 'cli-tool',
+  LIBRARY = 'library'
+}
+```
+
+### 4.3 Agent Outputs
+
+```typescript
+interface PRDOutput {
+  document: string; // Markdown content
+  metadata: {
+    features: string[];
+    userStories: UserStory[];
+    acceptanceCriteria: AcceptanceCriteria[];
+  };
+}
+
+interface ArchitectureOutput {
+  document: string; // Markdown content
+  components: Component[];
+  technologyStack: Technology[];
+  diagrams: Diagram[];
+}
+
+interface CodeOutput {
+  files: CodeFile[];
+  structure: DirectoryStructure;
+  dependencies: Dependency[];
+}
+
+interface QualityOutput {
+  score: number; // 0-10
+  checks: QualityCheck[];
+  passed: boolean;
+}
+```
+
+### 4.4 Storage Models
+
+**Artifacts (S3):**
+```
+s3://ai-code-generator/artifacts/
+  {pipelineId}/
+    prd.md
+    architecture.md
+    code/
+      {file1}.js
+      {file2}.js
+    tests/
+      {test1}.test.js
+    docs/
+      README.md
+```
+
+**Pipeline Metadata (Redis):**
+```json
+{
+  "pipeline:{id}": {
+    "context": "{...}",
+    "state": "GENERATING_CODE",
+    "updatedAt": "2025-11-13T10:00:00Z"
+  }
+}
+```
+
+---
+
+## 5. API Specifications
+
+### 5.1 LLM API Integration
+
+**Provider:** OpenAI
+**Model:** GPT-4
+**Endpoints:**
+- Chat Completion API: `https://api.openai.com/v1/chat/completions`
+
+**Request Format:**
+```typescript
+interface LLMRequest {
+  model: 'gpt-4';
+  messages: Array<{
+    role: 'system' | 'user' | 'assistant';
+    content: string;
+  }>;
+  temperature: number;
+  max_tokens: number;
+}
+```
+
+**Rate Limits:**
+- 10,000 tokens/minute
+- 500 requests/minute
+- Handle with exponential backoff
+
+### 5.2 GitHub API Integration
+
+**Provider:** GitHub
+**API Version:** v3 REST API
+**Authentication:** Personal Access Token
+
+**Key Endpoints:**
+- Create Repository: `POST /user/repos`
+- Create File: `PUT /repos/{owner}/{repo}/contents/{path}`
+- Create Branch: `POST /repos/{owner}/{repo}/git/refs`
+
+**Rate Limits:**
+- 5,000 requests/hour (authenticated)
+- Handle with retry logic
+
+### 5.3 Internal API (Future)
+
+**CLI → Orchestrator:**
+```typescript
+interface GenerateRequest {
+  description: string;
+  projectType: ProjectType;
+  preferences?: UserPreferences;
+}
+
+interface GenerateResponse {
+  pipelineId: string;
+  status: 'queued' | 'processing' | 'completed' | 'failed';
+  repositoryUrl?: string;
+}
+```
+
+---
+
+## 6. Component Specifications
+
+### 6.1 Pipeline Orchestrator
+
+**Responsibilities:**
+- Manage pipeline state machine
+- Coordinate stage execution
+- Handle errors and retries
+- Maintain pipeline context
+
+**Key Methods:**
+```typescript
+class PipelineOrchestrator {
+  async start(context: PipelineContext): Promise<void>;
+  async executeStage(stage: Stage): Promise<StageOutput>;
+  async handleError(error: Error, stage: Stage): Promise<void>;
+  async retry(stage: Stage, maxRetries: number): Promise<StageOutput>;
+  async checkpoint(context: PipelineContext): Promise<void>;
+  async resume(pipelineId: string): Promise<void>;
+}
+```
+
+### 6.2 PRD Agent
+
+**Responsibilities:**
+- Generate Product Requirements Document
+- Extract requirements from user input
+- Create structured PRD
+
+**Implementation:**
+```typescript
+class PRDAgent {
+  async generate(context: PipelineContext): Promise<PRDOutput> {
+    const prompt = this.buildPrompt(context.input);
+    const response = await this.llmClient.chat.completions.create({
+      model: 'gpt-4',
+      messages: [
+        { role: 'system', content: PRD_SYSTEM_PROMPT },
+        { role: 'user', content: prompt }
+      ]
+    });
+    return this.parseResponse(response);
+  }
+}
+```
+
+### 6.3 Code Agent
+
+**Responsibilities:**
+- Generate source code files
+- Create project structure
+- Follow best practices
+
+**Implementation:**
+```typescript
+class CodeAgent {
+  async generate(context: PipelineContext): Promise<CodeOutput> {
+    const architecture = context.stages.architecture;
+    const files = await Promise.all(
+      architecture.components.map(component => 
+        this.generateFile(component)
+      )
+    );
+    return { files, structure: this.buildStructure(files) };
+  }
+}
+```
+
+### 6.4 Quality Agent
+
+**Responsibilities:**
+- Run quality checks
+- Calculate quality scores
+- Validate code syntax
+
+**Checks:**
+- Syntax validation
+- Test coverage
+- Documentation completeness
+- Code style compliance
+
+---
+
+## 7. Integration Points
+
+### 7.1 LLM API Integration
+
+**Connection:** HTTPS REST API
+**Authentication:** API Key in headers
+**Error Handling:** Exponential backoff, retry 3 times
+**Monitoring:** Track API usage, costs, response times
+
+### 7.2 GitHub API Integration
+
+**Connection:** HTTPS REST API
+**Authentication:** OAuth token
+**Error Handling:** Retry on rate limits, handle 404s
+**Monitoring:** Track API usage, rate limit status
+
+### 7.3 S3 Storage Integration
+
+**Connection:** AWS SDK
+**Authentication:** AWS credentials
+**Error Handling:** Retry on transient errors
+**Monitoring:** Track storage usage, costs
+
+### 7.4 Redis Queue Integration
+
+**Connection:** Redis protocol
+**Authentication:** Password (if configured)
+**Error Handling:** Reconnect on connection loss
+**Monitoring:** Track queue depth, processing rate
+
+---
+
+## 8. Security & Compliance
+
+### 8.1 Data Security
+
+**User Input:**
+- Encrypted in transit (HTTPS)
+- Not stored permanently (only during pipeline execution)
+- No sensitive data sent to LLM
+
+**API Keys:**
+- Stored in environment variables
+- Never committed to code
+- Rotated regularly
+
+**Generated Code:**
+- Stored securely in GitHub
+- Access controlled by user's GitHub permissions
+- No secrets included in generated code
+
+### 8.2 Authentication & Authorization
+
+**CLI Authentication:**
+- GitHub OAuth for MVP
+- Token stored securely locally
+- No user accounts required for MVP
+
+**API Access:**
+- API keys for future API access
+- Rate limiting per key
+- Usage tracking
+
+### 8.3 Code Security
+
+**Generated Code:**
+- Basic security scanning (future enhancement)
+- Dependency vulnerability checking (future)
+- No secrets in generated code
+- User responsible for security review
+
+---
+
+## 9. Performance Requirements
+
+### 9.1 Pipeline Performance
+
+**Target Metrics:**
+- Average execution time: < 1 hour
+- 90th percentile: < 1.5 hours
+- 99th percentile: < 2 hours
+
+**Optimization Strategies:**
+- Parallel file generation
+- LLM response caching
+- Incremental generation
+
+### 9.2 System Performance
+
+**Target Metrics:**
+- API response time: < 2 seconds
+- Concurrent pipelines: 10+ simultaneous
+- Queue processing: 100+ tasks/hour
+
+**Scalability:**
+- MVP: Single server
+- Future: Horizontal scaling with worker pool
+
+### 9.3 Resource Usage
+
+**LLM API:**
+- Average tokens per pipeline: ~50,000
+- Cost per pipeline: ~$0.50-1.00
+- Rate limit handling required
+
+**Storage:**
+- Average artifacts per pipeline: ~5MB
+- Retention: 7 days for MVP
+- Cost: Minimal (S3 standard)
+
+---
+
+## 10. Deployment Architecture
+
+### 10.1 MVP Deployment
+
+**Infrastructure:**
+- Single EC2 instance (t3.medium)
+- Redis on same instance (Docker)
+- S3 bucket for artifacts
+- GitHub OAuth app
+
+**Architecture:**
+```
+┌─────────────────────────────┐
+│   EC2 Instance (t3.medium)  │
+│  ┌───────────────────────┐  │
+│  │  Node.js Application  │  │
+│  │  - CLI Tool           │  │
+│  │  - Orchestrator       │  │
+│  │  - All Agents        │  │
+│  └───────────────────────┘  │
+│  ┌───────────────────────┐  │
+│  │  Redis (Docker)       │  │
+│  └───────────────────────┘  │
+└─────────────────────────────┘
+         │
+         ├──→ OpenAI API
+         ├──→ GitHub API
+         └──→ S3 (Artifacts)
+```
+
+### 10.2 Environment Configuration
+
+**Environment Variables:**
+```bash
+OPENAI_API_KEY=sk-...
+GITHUB_TOKEN=ghp_...
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_REGION=us-east-1
+S3_BUCKET=ai-code-generator-artifacts
+REDIS_URL=redis://localhost:6379
+```
+
+### 10.3 Deployment Process
+
+1. Build TypeScript: `npm run build`
+2. Package application: `npm pack`
+3. Deploy to EC2: `scp` + `npm install -g`
+4. Configure environment variables
+5. Start service: `ai-code-gen serve`
+
+---
+
+## 11. Monitoring & Observability
+
+### 11.1 Metrics to Track
+
+**Pipeline Metrics:**
+- Pipeline success rate
+- Average execution time per stage
+- Error rates by stage
+- Quality score distribution
+
+**System Metrics:**
+- API response times
+- Queue depth
+- LLM API usage and costs
+- Storage usage
+
+**Business Metrics:**
+- Repositories generated per day
+- User satisfaction scores
+- Feature usage statistics
+
+### 11.2 Logging Strategy
+
+**Log Levels:**
+- DEBUG: Detailed debugging information
+- INFO: General information (pipeline started, completed)
+- WARN: Warning messages (retries, rate limits)
+- ERROR: Error messages (failures, exceptions)
+
+**Log Format:** JSON
+```json
+{
+  "timestamp": "2025-11-13T10:00:00Z",
+  "level": "INFO",
+  "pipelineId": "pipe-123",
+  "stage": "GENERATING_CODE",
+  "message": "Code generation started"
+}
+```
+
+**Log Storage:**
+- Console output for MVP
+- CloudWatch Logs (future)
+- Retention: 30 days
+
+### 11.3 Alerting
+
+**Critical Alerts:**
+- Pipeline failure rate > 10%
+- LLM API errors > 5%
+- GitHub API rate limit exceeded
+
+**Warning Alerts:**
+- Average execution time > 1.5 hours
+- Queue depth > 50
+- Storage usage > 80%
+
+---
+
+## 12. Development Guidelines
+
+### 12.1 Code Style
+
+**TypeScript:**
+- Use strict mode
+- Prefer interfaces over types
+- Use async/await, not callbacks
+- Handle errors explicitly
+
+**Naming:**
+- Classes: PascalCase (`PipelineOrchestrator`)
+- Functions: camelCase (`generateCode`)
+- Constants: UPPER_SNAKE_CASE (`MAX_RETRIES`)
+- Files: kebab-case (`pipeline-orchestrator.ts`)
+
+### 12.2 Testing Guidelines
+
+**Unit Tests:**
+- Test all agent methods
+- Mock external APIs
+- Achieve 70%+ coverage
+
+**Integration Tests:**
+- Test pipeline end-to-end
+- Use test LLM API keys
+- Use test GitHub repositories
+
+**Test Structure:**
+```
+src/
+  agents/
+    prd-agent.ts
+    __tests__/
+      prd-agent.test.ts
+```
+
+### 12.3 Error Handling
+
+**Error Types:**
+- `PipelineError`: Pipeline-specific errors
+- `AgentError`: Agent execution errors
+- `APIError`: External API errors
+
+**Error Handling Pattern:**
+```typescript
+try {
+  const result = await agent.generate(context);
+  return result;
+} catch (error) {
+  if (error instanceof APIError && error.isRetryable) {
+    return await retry(agent.generate, context);
+  }
+  throw new PipelineError('Generation failed', error);
+}
+```
+
+### 12.4 Documentation Standards
+
+**Code Documentation:**
+- JSDoc comments for public methods
+- Inline comments for complex logic
+- README for each module
+
+**API Documentation:**
+- OpenAPI/Swagger for future API
+- Examples for all endpoints
+- Error response documentation
+
+---
+
+**This technical specification defines the MVP implementation. All components must adhere to these specifications.**
+

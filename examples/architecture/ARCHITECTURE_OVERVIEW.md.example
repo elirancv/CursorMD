@@ -1,0 +1,463 @@
+# ARCHITECTURE_OVERVIEW.md - Example
+
+This is a complete example of an ARCHITECTURE_OVERVIEW document for: **AI Code Generator Platform**
+
+---
+
+# Architecture Overview: AI Code Generator Platform
+
+## System Overview
+
+The AI Code Generator Platform is a pipeline-based system that transforms natural language product descriptions into complete, production-ready software repositories. The system orchestrates multiple AI agents, each responsible for a specific stage of the generation process, ensuring quality and consistency throughout.
+
+### High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    User Interface Layer                      │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
+│  │   CLI Tool   │  │   Web UI    │  │    API       │       │
+│  └──────┬───────┘  └──────┬──────┘  └──────┬───────┘       │
+└─────────┼──────────────────┼─────────────────┼─────────────┘
+          │                  │                 │
+          └──────────────────┼─────────────────┘
+                             │
+┌────────────────────────────┼─────────────────────────────┐
+│              Orchestration Layer                          │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │         Pipeline Orchestrator                    │   │
+│  │  - State Management (FSM)                          │   │
+│  │  - Stage Coordination                             │   │
+│  │  - Error Handling & Retry                        │   │
+│  │  - Checkpoint & Resume                           │   │
+│  └──────────────────────────────────────────────────┘   │
+└────────────────────────────┬─────────────────────────────┘
+                             │
+┌────────────────────────────┼─────────────────────────────┐
+│              Generation Layer                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
+│  │   PRD    │  │Architecture│ │   Code   │  │  Tests   │ │
+│  │  Agent   │  │   Agent   │  │  Agent   │  │  Agent   │ │
+│  └──────────┘  └───────────┘  └──────────┘  └──────────┘ │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                │
+│  │   Docs   │  │ Quality  │  │  Repo    │                │
+│  │  Agent   │  │  Agent   │  │  Agent   │                │
+│  └──────────┘  └──────────┘  └──────────┘                │
+└────────────────────────────┬─────────────────────────────┘
+                             │
+┌────────────────────────────┼─────────────────────────────┐
+│              Advisory Layer (Future)                       │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐               │
+│  │Security  │  │Performance│  │  Best    │               │
+│  │ Advisor  │  │  Advisor  │  │ Practices│               │
+│  └──────────┘  └──────────┘  └──────────┘                │
+└────────────────────────────┬─────────────────────────────┘
+                             │
+┌────────────────────────────┼─────────────────────────────┐
+│              Infrastructure Layer                          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
+│  │   LLM    │  │  GitHub  │  │  Storage  │  │  Queue   │ │
+│  │   API    │  │   API    │  │  (S3)     │  │ (Redis)  │ │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘ │
+└───────────────────────────────────────────────────────────┘
+```
+
+## Architecture Layers
+
+### 1. User Interface Layer
+
+**Purpose:** Provide multiple interfaces for users to interact with the system
+
+**Components:**
+- **CLI Tool:** Command-line interface for developers
+- **Web UI:** Browser-based interface (future)
+- **REST API:** Programmatic access for integrations
+
+**Responsibilities:**
+- Accept user input (natural language descriptions)
+- Validate input
+- Display progress and results
+- Handle errors and provide feedback
+
+### 2. Orchestration Layer
+
+**Purpose:** Coordinate the entire generation pipeline
+
+**Components:**
+- **Pipeline Orchestrator:** Main coordinator
+  - State Machine (FSM) for pipeline stages
+  - Stage sequencing and dependencies
+  - Error handling and retry logic
+  - Checkpoint and resume capabilities
+
+**Responsibilities:**
+- Manage pipeline execution flow
+- Coordinate between agents
+- Handle failures and retries
+- Maintain pipeline context
+- Ensure quality gates pass
+
+### 3. Generation Layer
+
+**Purpose:** Execute the actual generation tasks
+
+**Components (Agents):**
+
+**PRD Agent:**
+- Generates Product Requirements Document
+- Extracts requirements from user input
+- Creates structured PRD with all sections
+
+**Architecture Agent:**
+- Designs system architecture
+- Selects technology stack
+- Defines components and interactions
+- Creates architecture diagrams
+
+**Code Agent:**
+- Generates source code files
+- Creates project structure
+- Implements business logic
+- Follows best practices
+
+**Test Agent:**
+- Generates unit tests
+- Creates integration tests
+- Sets up test framework
+- Ensures coverage targets
+
+**Documentation Agent:**
+- Generates README
+- Creates API documentation
+- Writes architecture docs
+- Adds inline code comments
+
+**Quality Agent:**
+- Runs quality checks
+- Calculates quality scores
+- Validates code syntax
+- Checks test coverage
+
+**Repository Agent:**
+- Creates GitHub repository
+- Commits all files
+- Sets up branch protection
+- Configures repository settings
+
+**Responsibilities:**
+- Execute generation tasks
+- Maintain quality standards
+- Follow templates and patterns
+- Produce consistent output
+
+### 4. Advisory Layer (Future)
+
+**Purpose:** Provide expert guidance and recommendations
+
+**Components (Advisors):**
+- **Security Advisor:** Security best practices
+- **Performance Advisor:** Performance optimization
+- **Best Practices Advisor:** Code quality guidance
+
+**Responsibilities:**
+- Review generated code
+- Provide recommendations
+- Suggest improvements
+- Enforce policies
+
+### 5. Infrastructure Layer
+
+**Purpose:** Provide external services and storage
+
+**Components:**
+- **LLM API:** AI model access (OpenAI, Anthropic, etc.)
+- **GitHub API:** Repository management
+- **Storage (S3):** Artifact storage
+- **Queue (Redis):** Task queue for async processing
+
+**Responsibilities:**
+- Provide external services
+- Store artifacts and logs
+- Manage async operations
+- Handle API rate limits
+
+## Pipeline Architecture
+
+### Pipeline Stages
+
+```
+1. Input Processing
+   ↓
+2. PRD Generation
+   ↓
+3. Architecture Design
+   ↓
+4. Code Generation
+   ↓
+5. Test Generation
+   ↓
+6. Documentation Generation
+   ↓
+7. Quality Gates
+   ↓
+8. Repository Creation
+   ↓
+9. Completion
+```
+
+### Stage Dependencies
+
+- **Stage 2 (PRD)** depends on Stage 1 (Input)
+- **Stage 3 (Architecture)** depends on Stage 2 (PRD)
+- **Stage 4 (Code)** depends on Stage 3 (Architecture)
+- **Stage 5 (Tests)** depends on Stage 4 (Code)
+- **Stage 6 (Docs)** depends on Stages 2-4 (PRD, Architecture, Code)
+- **Stage 7 (Quality)** depends on Stages 4-6 (Code, Tests, Docs)
+- **Stage 8 (Repo)** depends on Stage 7 (Quality Gates passed)
+
+### Parallel Execution Opportunities
+
+- Tests and Documentation can be generated in parallel (both depend on Code)
+- Multiple code files can be generated in parallel
+- Quality checks can run in parallel
+
+## Agent System
+
+### Agent Contract
+
+Each agent follows a standard contract:
+
+**Input:**
+- Pipeline context (previous stage outputs)
+- Configuration (project type, preferences)
+- Templates and patterns
+
+**Output:**
+- Generated artifacts (files, documents)
+- Metadata (quality scores, metrics)
+- Status (success/failure, warnings)
+
+**Error Handling:**
+- Retry on transient failures
+- Fail fast on critical errors
+- Provide detailed error messages
+
+### Agent Communication
+
+Agents communicate through:
+- **Pipeline Context:** Shared state object
+- **Events:** Stage completion events
+- **Artifacts:** Generated files stored in shared storage
+
+## Component Interactions
+
+### Sequence: Full Pipeline Execution
+
+```
+User → CLI → Orchestrator
+              ↓
+         Orchestrator → PRD Agent → LLM API
+              ↓
+         Orchestrator → Architecture Agent → LLM API
+              ↓
+         Orchestrator → Code Agent → LLM API
+              ↓
+         Orchestrator → Test Agent → LLM API
+              ↓
+         Orchestrator → Docs Agent → LLM API
+              ↓
+         Orchestrator → Quality Agent → Quality Checks
+              ↓
+         Orchestrator → Repo Agent → GitHub API
+              ↓
+         Orchestrator → CLI → User
+```
+
+## Technology Choices & Rationale
+
+### Core Technology Stack
+
+**Language: TypeScript/Node.js**
+- **Rationale:** 
+  - Strong typing for complex system
+  - Rich ecosystem for CLI and API development
+  - Good LLM API client libraries
+  - Easy GitHub API integration
+
+**Orchestration: Custom FSM**
+- **Rationale:**
+  - Full control over pipeline flow
+  - Easy to add new stages
+  - Clear state management
+  - Supports retry and resume
+
+**LLM Provider: OpenAI GPT-4**
+- **Rationale:**
+  - Best code generation quality
+  - Reliable API
+  - Good documentation
+  - Cost-effective for MVP
+
+**Storage: AWS S3**
+- **Rationale:**
+  - Scalable artifact storage
+  - Cost-effective
+  - Easy integration
+  - Reliable
+
+**Queue: Redis**
+- **Rationale:**
+  - Fast task queue
+  - Supports async processing
+  - Easy to scale
+  - Good for MVP
+
+**GitHub Integration: Octokit**
+- **Rationale:**
+  - Official GitHub SDK
+  - Well-maintained
+  - Good TypeScript support
+  - Handles rate limits
+
+### Future Technology Considerations
+
+- **Database:** PostgreSQL for metadata storage
+- **Caching:** Redis for LLM response caching
+- **Monitoring:** Prometheus + Grafana
+- **Logging:** ELK Stack or CloudWatch
+
+## Deployment Architecture
+
+### MVP Deployment
+
+```
+┌─────────────────────────────────────┐
+│         Single Server                │
+│  ┌──────────────────────────────┐   │
+│  │   Node.js Application        │   │
+│  │   - CLI Tool                 │   │
+│  │   - Pipeline Orchestrator    │   │
+│  │   - All Agents               │   │
+│  └──────────────────────────────┘   │
+│  ┌──────────────────────────────┐   │
+│  │   Redis (Queue)              │   │
+│  └──────────────────────────────┘   │
+└─────────────────────────────────────┘
+         │
+         ├──→ LLM API (OpenAI)
+         ├──→ GitHub API
+         └──→ S3 (Storage)
+```
+
+### Future Scalable Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│              Load Balancer                   │
+└──────────────┬──────────────────────────────┘
+               │
+    ┌──────────┼──────────┐
+    │          │          │
+┌───▼───┐  ┌───▼───┐  ┌───▼───┐
+│ API   │  │ API   │  │ API   │
+│ Server│  │ Server│  │ Server│
+└───┬───┘  └───┬───┘  └───┬───┘
+    │          │          │
+    └──────────┼──────────┘
+               │
+    ┌──────────▼──────────┐
+    │   Task Queue (Redis)  │
+    └──────────┬───────────┘
+               │
+    ┌──────────▼──────────┐
+    │  Worker Pool         │
+    │  ┌────┐  ┌────┐     │
+    │  │ W1 │  │ W2 │ ... │
+    │  └────┘  └────┘     │
+    └─────────────────────┘
+```
+
+## Security Considerations
+
+### Data Security
+- **User Input:** Encrypted in transit (HTTPS)
+- **API Keys:** Stored in secure vault (AWS Secrets Manager)
+- **Generated Code:** Stored securely, access controlled
+- **LLM API:** No sensitive data sent to LLM
+
+### Access Control
+- **CLI Authentication:** GitHub OAuth for MVP
+- **API Authentication:** API keys (future)
+- **Repository Access:** User's GitHub credentials
+
+### Code Security
+- **Generated Code:** Basic security scanning
+- **Dependencies:** Vulnerability scanning
+- **Secrets:** Never included in generated code
+
+## Scalability & Performance
+
+### Scalability Strategy
+
+**Horizontal Scaling:**
+- Stateless API servers (scale easily)
+- Worker pool for async processing
+- Queue-based task distribution
+
+**Vertical Scaling:**
+- Start with single server for MVP
+- Scale up as needed
+- Move to distributed architecture later
+
+### Performance Targets
+
+- **Pipeline Execution:** < 1 hour for typical project
+- **API Response Time:** < 2 seconds for status checks
+- **Concurrent Pipelines:** Support 10+ simultaneous (MVP)
+- **Queue Processing:** Process 100+ tasks/hour
+
+### Optimization Strategies
+
+- **LLM Response Caching:** Cache similar requests
+- **Parallel Generation:** Generate files in parallel
+- **Incremental Updates:** Only regenerate changed parts
+- **CDN:** Serve static assets via CDN (future)
+
+## Monitoring & Observability
+
+### Metrics to Track
+
+**Pipeline Metrics:**
+- Pipeline success rate
+- Average execution time per stage
+- Error rates by stage
+- Quality score distribution
+
+**System Metrics:**
+- API response times
+- Queue depth
+- LLM API usage and costs
+- Storage usage
+
+**Business Metrics:**
+- Repositories generated per day
+- User satisfaction scores
+- Feature usage statistics
+
+### Logging Strategy
+
+- **Structured Logging:** JSON format for all logs
+- **Log Levels:** DEBUG, INFO, WARN, ERROR
+- **Log Aggregation:** Centralized logging (CloudWatch/ELK)
+- **Retention:** 30 days for MVP
+
+### Alerting
+
+- **Critical:** Pipeline failures > 10%
+- **Warning:** API response time > 5 seconds
+- **Info:** Daily generation statistics
+
+---
+
+**This architecture supports the MVP requirements and provides a foundation for future enhancements.**
+

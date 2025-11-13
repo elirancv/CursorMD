@@ -1,0 +1,17 @@
+# Updating Existing Documentation
+
+When updating existing documents, follow this process.
+
+## Process
+
+1. Ask for: current version + what changed
+2. Return: **clean final version** (not diff)
+3. Improve structure/clarity while preserving correctness
+4. Optional: add brief "Changes" note if helpful
+
+## Cross-Referencing
+
+When relevant:
+- Add references: "See `docs/ARCHITECTURE_OVERVIEW.md` for details"
+- Avoid duplicating content across docs
+- Keep each doc focused but interconnected

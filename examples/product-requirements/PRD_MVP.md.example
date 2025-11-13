@@ -1,0 +1,372 @@
+# PRD_MVP.md - Example
+
+This is a complete example of a PRD_MVP document for: **AI Code Generator Platform - MVP**
+
+---
+
+# Product Requirements Document: MVP
+
+## Overview & Goals
+
+### Product Name
+AI Code Generator Platform (MVP)
+
+### Product Description
+An autonomous software factory that transforms high-level product ideas into complete, production-ready GitHub repositories. Users provide a natural language description, and the system generates a full codebase including architecture, code, tests, and documentation.
+
+### MVP Goals
+1. **Prove Core Value:** Demonstrate that AI can generate complete, usable repositories
+2. **Validate User Need:** Confirm developers want this capability
+3. **Test Technical Feasibility:** Verify the pipeline works end-to-end
+4. **Gather Feedback:** Learn what users need most
+
+### Success Criteria
+- ✅ Generate complete repository from idea in < 1 hour
+- ✅ Code quality score ≥ 7/10
+- ✅ Repository is runnable and deployable
+- ✅ 100+ repositories generated in first 3 months
+- ✅ 70%+ user satisfaction rating
+
+## MVP Scope Definition
+
+### In Scope (MVP)
+
+**Core Pipeline:**
+1. **Prompt Processing** - Parse user input, extract requirements
+2. **PRD Generation** - Create product requirements document
+3. **Architecture Design** - Generate system architecture
+4. **Code Generation** - Generate all source code files
+5. **Test Generation** - Create unit and integration tests
+6. **Documentation** - Generate README, API docs, etc.
+7. **Quality Gates** - Basic quality checks
+8. **Repository Creation** - Create GitHub repo with all files
+
+**Supported Project Types:**
+- REST API (Node.js/Express or Python/FastAPI)
+- Web Application (React + Node.js)
+- CLI Tool (Node.js or Python)
+- Library/Package (Node.js or Python)
+
+**Output Formats:**
+- GitHub repository
+- Local directory structure
+- ZIP file download
+
+### Out of Scope (MVP)
+
+**Explicitly Excluded:**
+- ❌ Multi-service/microservices architectures
+- ❌ Database migrations and complex data models
+- ❌ CI/CD pipeline generation (basic GitHub Actions only)
+- ❌ Deployment automation
+- ❌ Custom advisor system (basic quality checks only)
+- ❌ Policy engine
+- ❌ Template marketplace
+- ❌ User authentication/accounts (CLI-only for MVP)
+- ❌ Web UI (CLI tool only)
+- ❌ Enterprise features (RBAC, SSO, etc.)
+
+**Future Considerations:**
+- Advisor system for quality guidance
+- Policy engine for governance
+- Template marketplace
+- Web UI
+- Enterprise features
+
+## User Personas & Use Cases
+
+### Persona 1: Startup Founder (Sarah)
+
+**Background:**
+- Non-technical founder
+- Has product idea
+- Needs MVP quickly
+- Limited budget
+
+**Use Case:**
+1. Sarah describes her idea: "I need a REST API for a task management app"
+2. System generates complete Node.js/Express API
+3. Sarah gets GitHub repo with working code
+4. Sarah can deploy and test immediately
+
+**Success:** Sarah validates her idea in days, not weeks
+
+### Persona 2: Freelance Developer (Mike)
+
+**Background:**
+- Experienced developer
+- Works on multiple projects
+- Wants to speed up project setup
+- Needs consistent quality
+
+**Use Case:**
+1. Mike needs a new React app for a client
+2. Describes requirements: "E-commerce frontend with cart and checkout"
+3. System generates React app with best practices
+4. Mike customizes and extends the generated code
+
+**Success:** Mike saves 2-3 days of setup work per project
+
+### Persona 3: Technical Lead (David)
+
+**Background:**
+- Leads development team
+- Wants to standardize practices
+- Needs to enforce architecture patterns
+- Manages multiple projects
+
+**Use Case:**
+1. David needs to kickstart a new microservice
+2. Describes service requirements
+3. System generates service following team's patterns
+4. Team extends and customizes
+
+**Success:** Consistent architecture across all team projects
+
+## Core Features & Requirements
+
+### Feature 1: Natural Language Input
+
+**Description:** Users describe their project idea in natural language
+
+**Requirements:**
+- Accept text input (CLI prompt or file)
+- Parse and extract key requirements
+- Identify project type (API, web app, CLI, library)
+- Extract technology preferences if specified
+
+**Acceptance Criteria:**
+- ✅ System correctly identifies project type 90%+ of the time
+- ✅ Extracts at least 3 key requirements from input
+- ✅ Handles ambiguous inputs gracefully
+
+### Feature 2: PRD Generation
+
+**Description:** Automatically generate Product Requirements Document
+
+**Requirements:**
+- Create structured PRD from user input
+- Include: overview, features, user stories, acceptance criteria
+- Format as Markdown
+- Save to repository
+
+**Acceptance Criteria:**
+- ✅ PRD includes all required sections
+- ✅ Content is relevant to user's input
+- ✅ PRD is well-structured and readable
+
+### Feature 3: Architecture Design
+
+**Description:** Generate system architecture and design
+
+**Requirements:**
+- Create architecture overview document
+- Define components and their interactions
+- Specify technology stack
+- Include data flow diagrams (text-based)
+
+**Acceptance Criteria:**
+- ✅ Architecture is appropriate for project type
+- ✅ Components are clearly defined
+- ✅ Technology choices are justified
+
+### Feature 4: Code Generation
+
+**Description:** Generate all source code files
+
+**Requirements:**
+- Generate complete codebase structure
+- Include all necessary files (config, source, tests)
+- Follow best practices for chosen technology
+- Include proper error handling
+- Add code comments
+
+**Acceptance Criteria:**
+- ✅ Code is syntactically correct
+- ✅ Code follows language best practices
+- ✅ All files are properly structured
+- ✅ Code is runnable without errors
+
+### Feature 5: Test Generation
+
+**Description:** Generate unit and integration tests
+
+**Requirements:**
+- Create test files for all major components
+- Include test cases for core functionality
+- Set up test framework configuration
+- Achieve minimum 70% code coverage
+
+**Acceptance Criteria:**
+- ✅ Tests are runnable
+- ✅ Tests cover core functionality
+- ✅ Test coverage ≥ 70%
+
+### Feature 6: Documentation Generation
+
+**Description:** Generate comprehensive documentation
+
+**Requirements:**
+- Create README.md with setup instructions
+- Generate API documentation (if applicable)
+- Include architecture documentation
+- Add contribution guidelines
+
+**Acceptance Criteria:**
+- ✅ Documentation is complete and accurate
+- ✅ Setup instructions work
+- ✅ Documentation is well-formatted
+
+### Feature 7: Quality Gates
+
+**Description:** Basic quality checks before repository creation
+
+**Requirements:**
+- Check code syntax
+- Verify test coverage
+- Validate documentation completeness
+- Score overall quality (0-10)
+
+**Acceptance Criteria:**
+- ✅ Quality score calculated correctly
+- ✅ Fails if quality < 7/10
+- ✅ Provides feedback on quality issues
+
+### Feature 8: Repository Creation
+
+**Description:** Create GitHub repository with all generated files
+
+**Requirements:**
+- Create GitHub repository
+- Commit all generated files
+- Set up basic branch protection
+- Provide repository URL to user
+
+**Acceptance Criteria:**
+- ✅ Repository created successfully
+- ✅ All files committed correctly
+- ✅ Repository is accessible
+
+## Success Metrics
+
+### User Metrics
+- **Repositories Generated:** 100+ in first 3 months
+- **User Satisfaction:** 70%+ rate as "satisfied" or "very satisfied"
+- **Repeat Usage:** 40%+ of users generate 2+ repositories
+
+### Quality Metrics
+- **Code Quality Score:** Average ≥ 7/10
+- **Test Coverage:** Average ≥ 70%
+- **Documentation Completeness:** 100% of required docs
+
+### Technical Metrics
+- **Pipeline Success Rate:** ≥ 90% successful completions
+- **Average Generation Time:** < 1 hour
+- **Error Rate:** < 10% of runs fail
+
+### Business Metrics
+- **Time to First Commit:** < 1 hour (vs. days/weeks manually)
+- **User Acquisition:** 500+ signups in first 3 months
+- **Net Promoter Score:** ≥ 30
+
+## Timeline & Milestones
+
+### Phase 1: Foundation (Weeks 1-2)
+- ✅ Set up development environment
+- ✅ Implement basic CLI interface
+- ✅ Create prompt processing module
+- ✅ Build PRD generation
+
+**Milestone:** Can generate PRD from user input
+
+### Phase 2: Core Generation (Weeks 3-4)
+- ✅ Implement architecture generation
+- ✅ Build code generation engine
+- ✅ Create test generation
+- ✅ Add documentation generation
+
+**Milestone:** Can generate complete codebase
+
+### Phase 3: Quality & Integration (Weeks 5-6)
+- ✅ Implement quality gates
+- ✅ Add GitHub integration
+- ✅ Create repository creation flow
+- ✅ End-to-end testing
+
+**Milestone:** Can create GitHub repo with generated code
+
+### Phase 4: Polish & Launch (Weeks 7-8)
+- ✅ User testing and feedback
+- ✅ Bug fixes and improvements
+- ✅ Documentation and tutorials
+- ✅ Public launch
+
+**Milestone:** MVP launched and available
+
+## Open Questions
+
+### Technical Questions
+1. **Q:** Which LLM provider to use? (OpenAI, Anthropic, etc.)
+   - **A:** Start with OpenAI GPT-4, evaluate others later
+
+2. **Q:** How to handle very large codebases?
+   - **A:** MVP focuses on small-medium projects (< 50 files)
+
+3. **Q:** How to ensure generated code security?
+   - **A:** Basic security scanning, manual review recommended
+
+### Product Questions
+1. **Q:** Should we support multiple languages/frameworks?
+   - **A:** MVP: Node.js and Python only, expand later
+
+2. **Q:** How to handle user feedback and iterations?
+   - **A:** MVP: Manual feedback collection, automated later
+
+3. **Q:** Pricing model for MVP?
+   - **A:** Free tier (5 repos/month), paid ($19/month unlimited)
+
+### Business Questions
+1. **Q:** Target market size?
+   - **A:** Start with individual developers, expand to teams
+
+2. **Q:** Competitive differentiation?
+   - **A:** Focus on complete repository generation, not just code snippets
+
+## Dependencies
+
+### External Dependencies
+- GitHub API access
+- LLM API access (OpenAI)
+- Cloud hosting (for future web UI)
+
+### Internal Dependencies
+- Development team availability
+- Design resources (for future UI)
+- Marketing resources (for launch)
+
+## Risks & Mitigations
+
+### Risk 1: Generated Code Quality
+- **Impact:** High - Poor quality code damages reputation
+- **Probability:** Medium
+- **Mitigation:** Quality gates, manual review option, iterative improvement
+
+### Risk 2: LLM API Costs
+- **Impact:** Medium - High costs affect profitability
+- **Probability:** Medium
+- **Mitigation:** Optimize prompts, cache results, monitor usage
+
+### Risk 3: User Adoption
+- **Impact:** High - Low adoption means product failure
+- **Probability:** Medium
+- **Mitigation:** Focus on user experience, gather feedback early, iterate quickly
+
+### Risk 4: Technical Complexity
+- **Impact:** Medium - Complex system harder to maintain
+- **Probability:** High
+- **Mitigation:** Start simple, modular architecture, good documentation
+
+---
+
+**This PRD defines the MVP scope. All features outside this scope are deferred to future versions.**
+
